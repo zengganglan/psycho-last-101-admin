@@ -1,0 +1,106 @@
+{
+  "1": {
+    "sort": 1,
+    "id": 1,
+    "pid": 0,
+    "menu_route": "Evaluation",
+    "icon": "icon-baobei",
+    "menu_name": "测评中心",
+    "items": [{
+        "id": 4,
+        "pid": 1,
+        "menu_route": "Evaluation/survey",
+        "icon": null,
+        "menu_name": "心理普测",
+        "items": []
+
+      },
+      {
+        "id": 7,
+        "pid": 1,
+        "menu_route": "Evaluation/zice",
+        "icon": null,
+        "menu_name": "心理自测",
+        "items": []
+
+      },
+      {
+        "id": 7,
+        "pid": 1,
+        "menu_route": "Evaluation/jilu",
+        "icon": null,
+        "menu_name": "测评记录",
+        "items": []
+
+      }
+
+    ]
+
+  },
+  "2": {
+    "sort": 2,
+    "id": 2,
+    "pid": 0,
+    "menu_route": "student",
+    "icon": "icon-zixun",
+    "menu_name": "咨询中心",
+    "items": [{
+        "id": 3,
+        "pid": 2,
+        "menu_route": "student/jianjie",
+        "icon": null,
+        "menu_name": "中心简介",
+        "items": []
+      },
+
+      {
+        "id": 7,
+        "pid": 2,
+        "menu_route": "student/history",
+        "icon": null,
+        "menu_name": "预约咨询",
+        "items": []
+
+      },
+     
+      {
+        "id": 7,
+        "pid": 2,
+        "menu_route": "student/message",
+        "icon": null,
+        "menu_name": "问题留言",
+        "items": []
+
+      }
+    ]
+  },
+
+  "4": {
+    "sort": 4,
+    "id": 2,
+    "pid": 0,
+    "menu_route": "Growup",
+    "icon": "icon-edit",
+    "menu_name": "成长档案",
+    "items": [{
+        "id": 3,
+        "pid": 2,
+        "menu_route": "Growup/record",
+        "icon": null,
+        "menu_name": "自我成长报告",
+        "items": []
+      },
+
+      {
+        "id": 7,
+        "pid": 1,
+        "menu_route": "Growup/comment",
+        "icon": null,
+        "menu_name": "评价中心",
+        "items": []
+
+      }
+
+    ]
+  }
+}
