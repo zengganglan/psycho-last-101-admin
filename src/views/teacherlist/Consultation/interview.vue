@@ -4,7 +4,7 @@
     <headson :headson="headson"></headson>
     <!-- 搜索栏 -->
     <div class="search">
-      <ul>
+      <!-- <ul>
         <li>
           类别：
           <select name v-model="formLabelWidth" id="type">
@@ -16,7 +16,7 @@
             >{{item['title']}}</option>
           </select>
         </li>
-      </ul>
+      </ul> -->
     </div>
     <div class="work">
       <!-- <excel-box :thead="this.thead" :filterVal="this.filterVal"  :tableData3="this.tableData3"></excel-box> -->
@@ -229,7 +229,7 @@ export default {
              item['times']=item['start_time']+'—'+item['end_time']
              var a = new Date(item['start_time']).getTime()
              var b = new Date(item['end_time']).getTime()
-             var c = new Date().getTime()
+             var c = new Date(server_time).getTime()
              if(c<a && a<=b){
                item['staus']='未开始'
              }else if(c>b && b>=a){

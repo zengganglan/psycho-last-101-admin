@@ -3,12 +3,12 @@
     <!-- 头部 -->
     <headson :headson="headson"></headson>
     <!-- 搜索栏 -->
-    <div class="search">
+    <!-- <div class="search">
       <span>关键字</span>
 
       <input type="text">
       <i data-v-30c34ff0 class="iconfont icon-sousuo"></i>
-    </div>
+    </div> -->
     <div class="work">
       <!-- <excel-box :thead="this.thead" :filterVal="this.filterVal"  :tableData3="this.tableData3"></excel-box> -->
       <span class="del" @click="handleDelete" :class="{ btnactive: isbtnActive }">

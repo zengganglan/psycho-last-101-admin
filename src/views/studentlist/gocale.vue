@@ -110,6 +110,8 @@ export default {
       this.dialogFormVisible = true;
       this.lbId=row.id
       this.name=row.view_name
+       // this.$router.push({path:'/studentindex/calequestion',query:{scaleid:this.lbId,name:this.name}})
+
     },
     // 分页·
     handleSizeChange(val) {
@@ -132,6 +134,7 @@ export default {
       var canvas = document.getElementById("canvas");
       console.log(this.lbId);
       // http://115.159.209.142:7006 服务器域名
+      
       QRCode.toCanvas(canvas, "http://115.159.209.142:7006/#/studentindex/caleindex?id="+this.lbId+'&name='+this.name, function(
         error
       ) {

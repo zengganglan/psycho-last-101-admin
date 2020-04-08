@@ -3,9 +3,9 @@
         <headson :headson="headson"></headson>
 
     <div class="search">
-      <span>关键字</span>
+      <!-- <span>关键字</span>
       <input type="text">
-      <i data-v-30c34ff0 class="iconfont icon-sousuo"></i>
+      <i data-v-30c34ff0 class="iconfont icon-sousuo"></i> -->
        
     </div>
     <div class="data">

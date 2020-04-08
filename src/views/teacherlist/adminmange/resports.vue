@@ -52,7 +52,7 @@
                   <p v-if="activity.types==1">留言内容：{{activity.content}}</p>
                   <p v-else-if="activity.types==2">咨询内容：{{activity.problem}}</p>
                   <p v-else-if="activity.types==3">访谈干预内容：{{activity.proc_idea}}</p>
-                  <!-- <p v-if="activity.types==4">{{activity.content}}</p> -->
+                  <p v-if="activity.types==4">测评量表{{activity.scale_name}}</p>
                 </el-checkbox>
               </el-card>
             </el-timeline-item>
@@ -74,7 +74,7 @@
 
 <script>
 import headson from "../../../components/headson";
-
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -176,20 +176,74 @@ export default {
                     }
                     that.alldata.push(item3);
                   });
-                  that.alldata = this.sortDataArray(that.alldata);
+                                      that.getscale(that.useid)
+
+               
+                });
+            });
+        });
+    },
+    getscale(uid) {
+      // 获得列表数据
+      // console.log(w)
+      //传递查询条件返回相应页码的数据条数 查询条件当前页码，和每页显示条数
+    
+      var that = this;
+      this.axios
+        .post("/api/v1/admin/scale/getTestResultList" , {
+          page: 1,
+          size: 60,
+          w:{uid:uid},
+        })
+        .then(function(res) {
+          if (res["data"].code == 0) {
+            var tableData = res["data"]["data"]["list"];
+            tableData.map((item, index) => {
+                item["types"] = 4;
+                item["timestamp"] = item["start_test_time"];
+              if (item["birth_date"]) {
+                var a = new Date().getTime() - new Date(item["birth_date"]);
+                var hours = a / 1000 / 60 / 60;
+                var year = Math.floor(hours / (24 * 30 * 12));
+                console.log(year);
+                item["age"] = year;
+              } else {
+                item["age"] = "null";
+              }
+              item["times"] = moment(
+                moment(item["end_test_time"]) - moment(item["start_test_time"])
+              ).format("HH:mm:ss");
+              if (item.sex == 0) {
+                item.sex = "女";
+              } else {
+                item.sex = "男";
+              }
+              if (item.valid == 0) {
+                item.valid = "有效";
+              } else {
+                item.valid = "无效";
+              }
+              if (item.type == 2) {
+                item.type = "自测";
+              } else {
+                item.type = "普查";
+              }
+                that.alldata.push(item)
+            });
+            // 四个请求请求完毕
+               console.log(that.alldata)
+                  that.alldata = that.sortDataArray(that.alldata);
                   that.alldata.map((item, index) => {
                     item["idnumber"] = index + 1;
                     that.checked.push(item["idnumber"]);
                   });
 
-                  this.activities = that.alldata;
-                  this.activities1 = that.alldata;
+                  that.activities = that.alldata;
+                  that.activities1 = that.alldata;
                   localStorage.setItem("alldata", JSON.stringify(that.alldata));
-                });
-            });
+          }
         });
     },
-
     sortDataArray(dataArray) {
       return dataArray.sort(function(a, b) {
         return Date.parse(b.timestamp) - Date.parse(a.timestamp);

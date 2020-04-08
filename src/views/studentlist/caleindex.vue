@@ -29,7 +29,7 @@
         methods: {
             
             go() {
-              this.$router.push({path:'/studentindex/calequestion',query:{id:this.id,name:this.name}})
+              this.$router.push({path:'/studentindex/calequestion',query:{scaleid:this.id,name:this.name}})
             }
         },
     }

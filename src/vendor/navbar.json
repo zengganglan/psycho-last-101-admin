@@ -73,34 +73,7 @@
 
       }
     ]
-  },
-
-  "4": {
-    "sort": 4,
-    "id": 2,
-    "pid": 0,
-    "menu_route": "Growup",
-    "icon": "icon-edit",
-    "menu_name": "成长档案",
-    "items": [{
-        "id": 3,
-        "pid": 2,
-        "menu_route": "Growup/record",
-        "icon": null,
-        "menu_name": "自我成长报告",
-        "items": []
-      },
-
-      {
-        "id": 7,
-        "pid": 1,
-        "menu_route": "Growup/comment",
-        "icon": null,
-        "menu_name": "评价中心",
-        "items": []
-
-      }
-
-    ]
   }
+
+ 
 }

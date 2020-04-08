@@ -105,7 +105,21 @@
     <!-- 量表测试 -->
     <div>
       <h2>测试结果记录</h2>
-      <div align="center">
+        <el-table
+        :data="scaledata"
+        style="width: 100%; margin-top: 20px"
+      >
+        <el-table-column prop="scale_name" label="量表名称"></el-table-column>
+        <el-table-column prop="stu_name" label="学生"></el-table-column>
+        <el-table-column prop="start_test_time" label="测试时间"></el-table-column>
+        <el-table-column prop="sex" label="性别"></el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column prop="type" label="类型"></el-table-column>
+        <el-table-column prop="times" label="耗时"></el-table-column>
+        <el-table-column prop="valid" label="有效"></el-table-column>
+      
+      </el-table>
+      <!-- <div align="center">
         <b>量表：同学关系问卷</b> 【
         <a href="test_report.asp?id=11002684&amp;key=0111116681104166" target="_blank">测试报告</a>】
       </div>
@@ -194,7 +208,7 @@
             </tr>
           </tbody>
         </table>
-      </fieldset>
+      </fieldset> -->
     </div>
     <!-- 访谈记录 -->
    <div>
@@ -385,6 +399,7 @@ export default {
       })
     })
     var that = this
+    console.log(checkeddata)
      checkeddata.map((item2,index2)=>{
          if (item2.types==1) {
             that.messagedata.push(item2)
@@ -461,16 +476,16 @@ export default {
   },
   mounted() {
              this.baseinfo(this.$route.query.useid) 
+// 做每个量表答题卡echart图标需要
+    // this.getlist();
+    // this.print(this.type);
+    //  var option=this.option
+    // $('.chart').each(function(){
+    //   $(this).data('option',option)
+    //   console.log($(this), $(this).data('option'))
+    //         console.log( $(this).data('option'))
 
-    this.getlist();
-    this.print(this.type);
-     var option=this.option
-    $('.chart').each(function(){
-      $(this).data('option',option)
-      console.log($(this), $(this).data('option'))
-            console.log( $(this).data('option'))
-
-    })
+    // })
   },
   beforeCreated() {
 

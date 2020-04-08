@@ -37,6 +37,7 @@
               <!-- 点击搜索开始出现table表格 -->
               <i class="iconfont icon-sousuo" @click="showtable()"></i>
               <span class="iconfont icon-wenhao"></span>
+
             </li>
           </ul>
         </div>
@@ -165,9 +166,10 @@
             <li>
               <span>范围：</span>
               <div class="schoolcheck1">
-                <schoolcheck></schoolcheck>
+                <schoolcheck ref="schoolcheck1"></schoolcheck>
+              <span class="iconfont icon-sousuo" @click="checknode" ></span>
+
               </div>
-         
             </li>
             <!-- <li><span>类型：</span> <select name=""  v-model="Groupid" id="type">
                 <option :value="item['id']" v-for="(item,index) in group" :key="index" selected = "selected">{{item['title']}}</option>
@@ -216,9 +218,7 @@
                 <tr
                   v-for="(item,index) in tableData3"
                   :key="index"
-                  @mouseover="changecolor(index)"
                   v-bind:class="{heightcolor:isactive==item.sort}"
-                  @mouseout="colorcancel()"
                 >
                   <td align="center">
                     <input
@@ -376,6 +376,14 @@ export default {
         value2: "",
         value3: ""
 
+      },
+       form: {
+        job_num: '',
+        phone: '',
+        name: "",
+        age: '',
+        unit_group: '',
+        sex: ""
       },
       thead: ['id',"学号", "姓名", "性别", "年龄", "班级"],
       thead1: ["序号", "学号", "姓名"],
@@ -557,9 +565,22 @@ export default {
     },
     // 搜索功能
     showtable() {
-      this.defaultProps.treeflag = false;
+      // this.defaultProps.treeflag = false;
       // 搜索开始获取表单value提交信息到后台，后台返回数据渲染
-      console.log(1);
+      
+    },
+        checknode() {
+      console.log(this.$refs.schoolcheck1.newvalue);
+      // this.tableflag = true;
+       this.form.unit_group=this.$refs.schoolcheck1.item.id-0
+      console.log( this.form);
+      var obj ={}
+      for(var key in this.form){
+         if (this.form[key]) {
+           obj[key]=this.form[key]
+         }
+      }
+      this.getList(this.page.currentPage, this.page.size,obj) 
     },
     //过滤操作
     filterNode(value, data) {
@@ -578,14 +599,7 @@ export default {
     colorcancel() {
       this.isactive = "";
     },
-    checknode(){
-      console.log(this.$refs.schoolcheck1.newvalue)
-
-
-
-
-      
-    }
+    
   },
   components: {
     schoolcheck: schoolcheck,
@@ -763,6 +777,29 @@ export default {
         }
       }
     }
+  }
+  .data3{
+    .search{
+      position: relative;
+  .icon-sousuo {
+          display: inline-block;
+          font-size: 22px;
+          vertical-align: middle;
+          height: 32px;
+          width: 30px;
+          line-height: 32px;
+          text-align: center;
+          color: #bad6fc;
+          position: absolute;
+          left: 255px;
+          top:0px;
+          border: 2px solid #e2e2e2;
+          border-left: none;
+          cursor: pointer;
+        }
+
+    }
+    
   }
   .add {
     width: 310px;

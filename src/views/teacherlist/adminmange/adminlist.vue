@@ -44,9 +44,9 @@
               </td>
               <td>性别</td>
               <td>
-                <el-select name v-model="form.sex" id="type">
-                  <el-option value="0">男</el-option>
-                  <el-option value="1">女</el-option>
+                <el-select name v-model="form.sex" id="type" clearable>
+                  <el-option value="1" label="男"></el-option>
+                  <el-option value="0" label="女"></el-option>
                 </el-select>
               </td>
               <td>姓名</td>

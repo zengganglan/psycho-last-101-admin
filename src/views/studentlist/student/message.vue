@@ -14,7 +14,7 @@
           <i class="iconfont icon-trash"></i>
         </span>
     </div>-->
-    <div class="data">
+    <!-- <div class="data">
       <el-table
         ref="singleTable"
         :data="tableData"
@@ -24,7 +24,6 @@
         :default-sort="{prop: 'date', order: 'descending'}"
         @selection-change="handleSelectionChange"
       >
-        <!-- <el-table-column property="sort" width="120mmmm" label="序号"></el-table-column> -->
         <el-table-column property="a" label="序号"></el-table-column>
         <el-table-column property="b" label="主题"></el-table-column>
         <el-table-column property="c" label="提问时间"></el-table-column>
@@ -40,9 +39,9 @@
 
        
       </el-table>
-    </div>
+    </div> -->
     <div>
-      <div class="pages">
+      <!-- <div class="pages">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="pageCurrentChange"
@@ -52,7 +51,7 @@
           layout="total, sizes, prev, pager, next, jumper"
           :total="page.countpage"
         ></el-pagination>
-      </div>
+      </div> -->
     </div>
     <div class="add" @click="addnumber">我要留言</div>
     <el-dialog title="留言添加" :visible.sync="dialogFormVisible">
@@ -359,12 +358,12 @@ export default {
 .add,
 .complete {
   width: 310px;
-  height: 25px;
+  height: 100px;
   margin: 0 auto;
   text-align: center;
-  line-height: 25px;
+  line-height: 100px;
   position: relative;
-  top: -20px;
+  top: 100px;
   color: gray;
   border: 1px solid #dfd7d7;
   border-radius: 10px;

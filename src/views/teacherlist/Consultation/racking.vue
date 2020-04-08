@@ -4,7 +4,7 @@
     <headson :headson="headson"></headson>
     <!-- 搜索栏 -->
     <div class="search">
-      <ul>
+      <!-- <ul>
         <li>
           星期：
           <select name v-model="formLabelWidth" id="type">
@@ -34,7 +34,7 @@
   </el-input>
        
         </li>
-      </ul>
+      </ul> -->
     </div>
     <!-- <div class="work">
       <span class="del" @click="handleDelete">

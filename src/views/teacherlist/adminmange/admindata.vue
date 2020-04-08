@@ -26,9 +26,9 @@
               </td>
               <td>性别</td>
               <td>
-                <el-select name v-model="form.sex" id="type">
-                  <el-option value="0">男</el-option>
-                  <el-option value="1">女</el-option>
+                <el-select name v-model="form.sex" id="type" clearable>
+                  <el-option value="0" label="女"></el-option>
+                  <el-option value="1" label="男"></el-option>
                 </el-select>
               </td>
               <td>姓名</td>
@@ -152,16 +152,16 @@
           </div>
         </div>
       </li>
-      <li class="data2" v-else-if="tabindex==5">
+      <li class="data2" v-else-if="tabindex==2">
         <ul>
           <li class="zy1">
-            <span>范围：</span>
+            <span>原位：</span>
             <div class="schoolcheck1">
               <schoolcheck ref="schoolcheck1"></schoolcheck>
             </div>
           </li>
           <li class="zy2">
-            <span>班级：</span>
+            <span>目标：</span>
             <div class="schoolcheck1">
               <schoolcheck ref="schoolcheck1"></schoolcheck>
             </div>
@@ -324,7 +324,7 @@ export default {
 
       // 切导航行栏
       // tabls: ["查询列表", "资料转移", "密码操作"],
-       tabls: ["查询列表", "密码操作"],
+       tabls: ["查询列表", "学生资料转移","密码操作"],
      
       tabindex: 1,
       // 页码

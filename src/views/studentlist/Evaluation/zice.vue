@@ -4,9 +4,9 @@
     <headson :headson="headson"></headson>
     <!-- 搜索栏 -->
     <div class="search">
-      <span>关键字</span>
+      <!-- <span>关键字</span>
       <input type="text">
-      <i data-v-30c34ff0 class="iconfont icon-sousuo"></i>
+      <i data-v-30c34ff0 class="iconfont icon-sousuo"></i> -->
     </div>
      <!-- <div class="work">
                 <span class="del" @click="handleDelete">
@@ -16,7 +16,6 @@
       </div> -->
     <div class="data">
       
-       <a href="../../../assets/excel/新时代智慧党建渠道价格表11.19(3).xlsx" download>222222222222222222</a>
       <el-table
         ref="singleTable"
         :data="tableData"

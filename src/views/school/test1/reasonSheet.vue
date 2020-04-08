@@ -160,12 +160,12 @@
                   </el-form-item> -->
                 </el-form>
               </el-tab-pane>
-              <el-tab-pane label="EXCEL上传因子">
+              <!-- <el-tab-pane label="EXCEL上传因子">
                 <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :file-list="fileList1" :limit="1">
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
                 </el-upload>
-              </el-tab-pane>
+              </el-tab-pane> -->
             </el-tabs>
 
             <div slot="footer" class="dialog-footer">
@@ -319,12 +319,12 @@
               <el-button type="primary" @click="submit2">提交</el-button>
             </div>
               </el-tab-pane>
-              <el-tab-pane label="上传因子结算">
+              <!-- <el-tab-pane label="上传因子结算">
                 <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :file-list="fileList2" :limit="1">
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
                 </el-upload>
-              </el-tab-pane>
+              </el-tab-pane> -->
             </el-tabs>
            
           </el-dialog>

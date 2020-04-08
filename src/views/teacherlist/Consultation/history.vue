@@ -16,7 +16,7 @@
             >{{item['title']}}</option>
           </select>
         </li> -->
-        <li>
+        <!-- <li>
           咨询师：
           <select name v-model="formLabelWidth" id="type">
             <option
@@ -33,7 +33,7 @@
     <el-button slot="append" icon="el-icon-search"></el-button>
   </el-input>
        
-        </li>
+        </li> -->
       </ul>
     </div>
     <!-- <div class="work">

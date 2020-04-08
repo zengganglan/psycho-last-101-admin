@@ -4,7 +4,7 @@
     <headson :headson="headson"></headson>
     <!-- 搜索栏 -->
     <div class="search">
-      <ul>
+      <!-- <ul>
         <li>
           范围：
           <select name v-model="formLabelWidth" id="type">
@@ -33,11 +33,9 @@
     <el-button slot="append" icon="el-icon-search"></el-button>
   </el-input>
        
-          <!-- <span>学生信息:</span>
-          <input type="text" />
-          <i data-v-30c34ff0 class="iconfont icon-sousuo"></i> -->
+         
         </li>
-      </ul>
+      </ul> -->
     </div>
     <div class="work">
       <!-- <excel-box :thead="this.thead" :filterVal="this.filterVal"  :tableData3="this.tableData3"></excel-box> -->

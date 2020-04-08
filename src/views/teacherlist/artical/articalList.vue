@@ -4,7 +4,7 @@
     <headson :headson="headson"></headson>
     <!-- 搜索栏 -->
     <div class="search">
-      <ul>
+      <!-- <ul>
         <li>
           栏目：
           <select name v-model="Groupid" id="type">
@@ -19,11 +19,10 @@
         <li>
           <span>发布者：</span>
           <input type="text" value id="person">
-          <!-- 点击搜索开始出现table表格 -->
           <i class="iconfont icon-sousuo" @click="showtable()"></i>
           <span class="iconfont icon-wenhao"></span>
         </li>
-      </ul>
+      </ul> -->
     </div>
     <div class="body">
       <div class="work">

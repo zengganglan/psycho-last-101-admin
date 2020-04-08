@@ -10,7 +10,7 @@
             <tr>
               <td>类型</td>
               <td>
-                <el-select name v-model="form.type" id="type">
+                <el-select name v-model="form2.scale_type " id="type" clearable>
                   <el-option
                     v-for="(item, index) in editableTabs"
                     :key="index"
@@ -21,22 +21,23 @@
               </td>
               <td>性别</td>
               <td>
-                <el-select name v-model="form.sex" id="type">
-                  <el-option value="0">男</el-option>
-                  <el-option value="1">女</el-option>
+                <el-select name v-model="form2.sex" id="type" clearable>
+                  <el-option value="1" label="男"></el-option>
+                  <el-option value="0" label="女"></el-option>
                 </el-select>
               </td>
               <td>量表</td>
               <td>
                 <!-- id:35,43,12,29, 31,-->
                 <el-select
+                 clearable
                   filterable
                   remote
                   reserve-keyword
                   placeholder="选择量表再统计[ASLEC,MHT,scl90,EPQ,16pf]"
                   :remote-method="remoteMethod"
                   :loading="loading"
-                  v-model="form1.scale_id"
+                  v-model="form2.scale_id"
                   value-key
                   @change="selectcale"
                 >
@@ -52,7 +53,7 @@
             <tr>
               <td>学号</td>
               <td>
-                <el-input v-model="form.fun_id"></el-input>
+                <el-input v-model="form2.job_num"></el-input>
               </td>
               <td>范围</td>
               <td>
@@ -62,29 +63,32 @@
               </td>
               <td>有效性</td>
               <td>
-                <el-select name v-model="form.val" id="type">
-                  <el-option value="有效">有效</el-option>
-                  <el-option value="无效">无效</el-option>
+                <el-select name v-model="form2.valid" id="type" clearable>
+                  <el-option value="0" label="有效"></el-option>
+                  <el-option value="1" label="无效"></el-option>
                 </el-select>
               </td>
             </tr>
             <tr>
-              <td>类型</td>
+              <td>自/普测</td>
               <td>
-                <el-select name v-model="form.testtype" id="type">
-                  <el-option value="自测">自测</el-option>
-                  <el-option value="普测">普测</el-option>
+                <el-select name v-model="form2.test_type" id="type" clearable>
+                  <el-option value="2" label="自测"></el-option>
+                  <el-option value="1" label='普测'></el-option>
                 </el-select>
               </td>
               <td>姓名</td>
               <td>
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form2.name"></el-input>
               </td>
               <td>时间</td>
               <td>
                 <el-date-picker
-                  v-model="form.time"
-                  type="daterange"
+                style="width:220px"
+                 format="yyyy-MM-dd HH:mm:ss"
+                 value-format='yyyy-MM-dd HH:mm:ss'
+                  v-model="times"
+                  type="datetimerange"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -101,7 +105,7 @@
         删除
         <i class="iconfont icon-trash"></i>
       </span>-->
-      <!-- <span @click="gostatistic">统计</span> -->
+      <span @click="showtable">查询</span>
       <span @click="goanswer">导出答题</span>
       <span @click="goscore">导出结果</span>
       <i class="del">
@@ -244,7 +248,18 @@ export default {
         unit_name: "",
         scale_id: ""
       },
-
+      times:"",
+      form2: {
+        scale_id: "",
+        scale_type: "",
+        test_type: "",
+        job_num: "",
+        valid: "",
+        name: "",
+        start_time: "",
+        unit_group_id:"",
+        expire_time: ""
+      },
       formLabelWidth: "100px",
       // 头部组件信息
       headson: ["测试结果", "测试结果数据查看"],
@@ -362,44 +377,42 @@ export default {
           if (res["data"]["code"] == 0) {
             var obj = JSON.stringify(res["data"]["data"]);
             localStorage.setItem("scalesobj", obj);
-
-             
           } else {
             that.$message(res["data"]["msg"]);
           }
         });
 
-          if (type == 1) {
-              // 统计[答题选项答案]
-              let routeUrl = that.$router.resolve({
-                path: "/Gauge/statistic",
-                query: { id: 96 }
-              });
-              window.open(routeUrl.href, "_blank");
-            } else if (type == 2) {
-              // 导出答题[因子分数]
-              let routeUrl = that.$router.resolve({
-                path: "/Gauge/answer_score",
-                query: { id: 96 }
-              });
-              window.open(routeUrl.href, "_blank");
-            } else if (type == 3) {
-              // 导出结果[选项分数/选项答案]
-              let routeUrl = that.$router.resolve({
-                path: "/Gauge/test_export_answer",
-                query: { id: 96 }
-              });
-              window.open(routeUrl.href, "_blank");
-            } else {
-              // 团体报告
-              let routeUrl = that.$router.resolve({
-                path: "/Gauge/totalresult"
-              });
-              window.open(routeUrl.href, "_blank");
-              //     that.$router.push({
-              //   path: "/Gauge/totalresult"
-              // });
-            }
+      if (type == 1) {
+        // 统计[答题选项答案]
+        let routeUrl = that.$router.resolve({
+          path: "/Gauge/statistic",
+          query: { id: 96 }
+        });
+        window.open(routeUrl.href, "_blank");
+      } else if (type == 2) {
+        // 导出答题[因子分数]
+        let routeUrl = that.$router.resolve({
+          path: "/Gauge/answer_score",
+          query: { id: 96 }
+        });
+        window.open(routeUrl.href, "_blank");
+      } else if (type == 3) {
+        // 导出结果[选项分数/选项答案]
+        let routeUrl = that.$router.resolve({
+          path: "/Gauge/test_export_answer",
+          query: { id: 96 }
+        });
+        window.open(routeUrl.href, "_blank");
+      } else {
+        // 团体报告
+        let routeUrl = that.$router.resolve({
+          path: "/Gauge/totalresult"
+        });
+        window.open(routeUrl.href, "_blank");
+        //     that.$router.push({
+        //   path: "/Gauge/totalresult"
+        // });
+      }
     },
     remoteMethod(query) {
       console.log(query);
@@ -415,8 +428,8 @@ export default {
     },
     selectcale() {
       //   <!-- id:12,29, 31,35,43,-->
-      var id = this.form1.scale_id;
-      this.getlist(this.page.currentpage, this.page.pagesize, id);
+      var id = this.form2.scale_id;
+      this.showtable();
       var ids = [12, 29, 31, 35, 43];
       var arr = [];
       var sca = ids.find(item => {
@@ -432,17 +445,41 @@ export default {
       }
       //  var a = [{scale_id:12},{scale_id:12},{scale_id:12}]
     },
-    getlist(currentpage, pagesize, id) {
+    // 搜索功能
+    showtable() {
+      //子组件树形控件的开关
+      this.$refs.schoolcheck.treeflag = false;
+      // 是名字
+      this.$refs.schoolcheck.newvalue;
+      // 搜索开始获取表单value提交信息到后台，后台返回数据渲染
+      this.form2.unit_group_id = this.$refs.schoolcheck.item.id - 0;
+      console.log(this.times);
+      var obj = {};
+      if (this.times) {
+        this.form2['start_time']=this.times[0]
+        this.form2['expire_time']=this.times[1]
+      }
+      for (var key in this.form2) {
+        if (this.form2[key]) {
+          obj[key] = this.form2[key];
+        }
+      }
+      console.log(this.form2,obj)
+      this.getlist(this.page.currentpage, this.page.pagesize,obj);
+    },
+    getlist(currentpage, pagesize, w,id) {
       // 获得列表数据
+      // console.log(w)
       //传递查询条件返回相应页码的数据条数 查询条件当前页码，和每页显示条数
       if (!id) {
         id = "";
       }
       var that = this;
       this.axios
-        .post("/api/v1/admin/scale/getTestResultList?sid=" + id, {
+        .post("/api/v1/admin/scale/getTestResultList" , {
           page: currentpage,
-          size: pagesize
+          size: pagesize,
+          w:w,
         })
         .then(function(res) {
           if (res["data"].code == 0) {
