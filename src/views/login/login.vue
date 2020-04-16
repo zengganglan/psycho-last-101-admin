@@ -130,7 +130,7 @@
               <ul>
                 <li v-if="role['sf']!==1">学校：{{role['college_name']}}</li>
                 <li>
-                  姓名：
+                  账号：
                   <i>{{role['name']}}</i>
                 </li>
                 <li>

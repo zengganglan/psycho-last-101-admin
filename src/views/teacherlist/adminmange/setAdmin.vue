@@ -157,7 +157,7 @@
 
                  
                 <input type="button" value="修改" class="add1" @click="changedisable" v-if="disabledInput">
-                    <input type="button" value="保存" class="add" @click="setadmin" v-else>     
+                    <input type="button" value="保存" class="add" @click="setadmin" v-else style="color:#fff;cursor:pointer">     
                   <input type="button" value="返回" class="return" @click="returnback">
                 </div>
               </template>
@@ -321,10 +321,14 @@ export default {
       this.values.auth_group_id=this.detail.auth_group_id
       this.values.nation=this.detail.nation
       this.values.unit_group=this.detail.unit_group
-        if (this.values.password.length<4 || this.values.password.length>20) {
-        this.$message('密码字符集在4到20区间，请输入正确的位数')
-                return
-
+        if (this.values.password) {
+        if (
+          this.values.password.length < 4 ||
+          this.values.password.length > 20
+        ) {
+          this.$message("密码字符集在4到20区间，请输入正确的位数");
+          return;
+        }
       }
       if (this.$refs.schoolcheck.item) {
          this.values.unit_group=this.$refs.schoolcheck.item.id

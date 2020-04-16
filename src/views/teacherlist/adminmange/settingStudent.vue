@@ -45,7 +45,12 @@
               <td>工号：</td>
               <td>
                 <template>
-                  <input type="text" placeholder="学号" v-model="detail.job_num"  v-bind:disabled="disabledInput" />
+                  <input
+                    type="text"
+                    placeholder="学号"
+                    v-model="detail.job_num"
+                    v-bind:disabled="disabledInput"
+                  />
                   <span>*</span>
                 </template>
               </td>
@@ -53,7 +58,12 @@
             <tr class>
               <td>姓名：</td>
               <td>
-                <input type="text" placeholder="请输入姓名" v-model="detail.name"  v-bind:disabled="disabledInput" />
+                <input
+                  type="text"
+                  placeholder="请输入姓名"
+                  v-model="detail.name"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
             <tr class>
@@ -67,7 +77,7 @@
                     ref="sex1"
                     @click="checkSex($event)"
                     :style="{'backgroundColor':values.sex==1? '#5bb95a':''}"
-                     v-bind:disabled="disabledInput"
+                    v-bind:disabled="disabledInput"
                   />
                   <input
                     name="sex2"
@@ -76,7 +86,7 @@
                     @click="checkSex($event)"
                     ref="sex2"
                     :style="{'backgroundColor':values.sex==0? '#5bb95a':''}"
-                     v-bind:disabled="disabledInput"
+                    v-bind:disabled="disabledInput"
                   />
                   <span>*</span>
                 </template>
@@ -92,7 +102,7 @@
                     type="date"
                     placeholder="选择日期"
                     :picker-options="pickerOptions1"
-                     v-bind:disabled="disabledInput"
+                    v-bind:disabled="disabledInput"
                   ></el-date-picker>
                 </template>
               </td>
@@ -100,20 +110,36 @@
             <tr class>
               <td>身份证号：</td>
               <td>
-                <input type="text" placeholder="18位身份证号" v-model="detail.id_card"  v-bind:disabled="disabledInput" />
+                <input
+                  type="text"
+                  placeholder="18位身份证号"
+                  v-model="detail.id_card"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
             <tr class>
               <td>手机：</td>
               <td>
-                <input type="text" placeholder="请输入手机号" v-model="detail.phone"  v-bind:disabled="disabledInput"/>
+                <input
+                  type="text"
+                  placeholder="请输入手机号"
+                  v-model="detail.phone"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
 
             <tr class>
               <td>班级组别：</td>
               <td>
-                <input type="text" placeholder="" v-model="gradename" v-bind:disabled="disabledInput" v-if="disabledInput">
+                <input
+                  type="text"
+                  placeholder
+                  v-model="gradename"
+                  v-bind:disabled="disabledInput"
+                  v-if="disabledInput"
+                />
                 <template v-else>
                   <div class="schoolcheck">
                     <schoolcheck ref="schoolcheck" :inputName="gradename"></schoolcheck>
@@ -125,25 +151,45 @@
             <tr class>
               <td>学级：</td>
               <td>
-                <input type="text" placeholder="请输入学级" v-model="detail.enrollment" v-bind:disabled="disabledInput" />
+                <input
+                  type="text"
+                  placeholder="请输入学级"
+                  v-model="detail.enrollment"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
             <tr class>
               <td>民族：</td>
               <td>
-                <input type="text" placeholder="请输入名族" v-model="detail.nation" v-bind:disabled="disabledInput"/>
+                <input
+                  type="text"
+                  placeholder="请输入名族"
+                  v-model="detail.nation"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
             <tr class>
               <td>邮箱：</td>
               <td>
-                <input type="text" placeholder="请输入邮箱" v-model="detail.email" v-bind:disabled="disabledInput"/>
+                <input
+                  type="text"
+                  placeholder="请输入邮箱"
+                  v-model="detail.email"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
             <tr class>
               <td>住址：</td>
               <td>
-                <input type="text" placeholder="请输入住址" v-model="detail.address" v-bind:disabled="disabledInput" />
+                <input
+                  type="text"
+                  placeholder="请输入住址"
+                  v-model="detail.address"
+                  v-bind:disabled="disabledInput"
+                />
               </td>
             </tr>
             <tr class>
@@ -155,8 +201,14 @@
                       :style="{ 'text-align': 'center','width':'200px','vertical-align':'center'}"
                     >带*必填</div>
 
-                    <input type="button" value="修改" class="add1" @click="changedisable" v-if="disabledInput">
-                    <input type="button" value="保存" class="add" @click="setstudent" v-else>
+                    <input
+                      type="button"
+                      value="修改"
+                      class="add1"
+                      @click="changedisable"
+                      v-if="disabledInput"
+                    />
+                    <input type="button" value="保存" class="add" @click="setstudent" v-else style="color:#fff;cursor:pointer" />
 
                     <input type="button" value="返回" class="return" @click="returnback" />
                   </div>
@@ -325,7 +377,7 @@
           <div style="margin-top:50px;text-align:center">  <el-button type="primary" round>保存</el-button></div>
           <input type="hidden" name="qnum" value="27" />
         </fieldset>
-      </li> -->
+      </li>-->
     </ul>
   </div>
 </template>
@@ -345,7 +397,7 @@ import md5 from "blueimp-md5";
 export default {
   data() {
     return {
-            disabledInput: true,
+      disabledInput: true,
 
       save: true,
       id: this.$route.query.id,
@@ -452,9 +504,9 @@ export default {
       //传递查询条件请求数据返回相应页码的数据条数 查询条件当前页码，和每页显示条数
       this.axios.post("/api/v1/admin/user/detail");
     },
-  changedisable(){
-     this.disabledInput=false
-   },
+    changedisable() {
+      this.disabledInput = false;
+    },
     //导航栏切换
     tab(index) {
       console.log(index);
@@ -510,22 +562,27 @@ export default {
       this.values.sex = this.values.sex + ""; //判断需要把数字变成字符串 避免是0为false
       var that = this;
       var obj = {};
-      console.log(this.values);
       var data = JSON.parse(Cookies.get("detail"));
-    if (this.values.password.length<4 || this.values.password.length>20) {
-        this.$message('密码字符集在4到20区间，请输入正确的位数')
-                return
-
+      if (this.values.password) {
+        if (
+          this.values.password.length < 4 ||
+          this.values.password.length > 20
+        ) {
+          this.$message("密码字符集在4到20区间，请输入正确的位数");
+          return;
+        }
       }
+
       for (var key in this.values) {
         if (this.values[key] && this.values[key] !== data[key]) {
           this.values.password = md5(this.values.password);
           obj[key] = this.values[key];
         }
       }
-       if (JSON.stringify(obj) == "{}") {
-        return 
+      if (JSON.stringify(obj) == "{}") {
+        return;
       }
+      console.log(this.values, obj);
 
       that.axios
         .post("api/v1/admin/user/editUser?id=" + that.id, obj)
@@ -610,9 +667,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input{
-    background-color: #f5f7fa;
-    }
+input {
+  background-color: #f5f7fa;
+}
 // 文件上传
 .file {
   position: relative;
@@ -732,7 +789,8 @@ input[type="checkbox"] {
 
   background-color: #ffffff;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  // -webkit-justify-content: space-around;
   .luru {
     border-left: 8px solid #679afa;
     color: #679afa;
@@ -879,33 +937,36 @@ input[type="checkbox"] {
     padding-left: 10px;
     font-size: 20px;
   }
-   .a2 {
+  .a2 {
+    height: 500px;
+    width: 1200px;
+    margin: auto auto;
+    border: none;
+    background-color: #ffffff;
+    tbody {
       height: 500px;
-      width:1200px;
-      margin: auto auto;
-      border:none;
-      background-color: #ffffff;
-      tbody {
-        height: 500px;
-        // border-collapse: separate;
-        // padding: 20px;
-        tr {
-          padding-top: 20px;
-          td {
-            margin: 50px;
-          }
+      // border-collapse: separate;
+      // padding: 20px;
+      tr {
+        padding-top: 20px;
+        td {
+          margin: 50px;
         }
       }
     }
-}
-
-.add, .bianji {
-  color: #fff !important;
+  }
 }
 .add1{
-  background-color: #b3b3b3
+  
 }
-.add{
+
+.bianji {
+  color: #fff !important;
+}
+.add1 {
+  background-color: #b3b3b3;
+}
+.add2 {
   background-color: #32a9ee;
 }
 </style>

@@ -29,6 +29,18 @@ Axios.interceptors.request.use(
 	    	// 	}
         // }
      }
+     // 添加时间戳       
+ if (config.method === 'post') {            
+  config.data = {                
+   ...config.data,                
+   t: Date.parse(new Date()) / 1000           
+  }       
+ } else if (config.method === 'get') {          
+   config.params = {               
+     t: Date.parse(new Date()) / 1000,               
+    ...config.params            
+  }       
+ }
    
     return config
   },

@@ -451,7 +451,7 @@ export default {
       var that = this;
       for (var key in this.form) {
         if (!this.form[key]) {
-          this.$message("请填写完整详细信息和选择咨询时间主题");
+          this.$message("请填写完整详细基本问题信息和选择咨询时间主题");
           return;
         }
       }
@@ -465,8 +465,9 @@ export default {
         .then(function(res) {
           console.log(res);
           if (res["data"]["code"] == 0) {
-            that.$message("增加成功");
             that.$router.go(0);
+              that.$message("增加成功");
+
           } else {
             that.$message(res["data"]["msg"]);
           }

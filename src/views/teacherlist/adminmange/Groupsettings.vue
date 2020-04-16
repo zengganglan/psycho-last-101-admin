@@ -2,13 +2,17 @@
   <div class="main">
     <div class="head">
       <div class="a1" style="color: #00CBA3;
-">单位组别设置111</div>
-      <span class="a2">单位组别设置，导出</span>
+">单位组别设置</div>
+      <span class="a2">单位组别设置，导出,删除【注意：具有子数据不能删除只能单个删除】</span>
     </div>
     <div class="body">
       <div class="bread">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item v-for="(item, index) in returnName" :key="index">
+          <el-breadcrumb-item
+            v-for="(item, index) in returnName"
+            :key="index"
+            style="padding-top:10px"
+          >
             <span
               style="color:#169bd5;cursor: pointer;"
               @click="bread(item.id,index)"
@@ -27,37 +31,37 @@
         </span>
       </div>
       <div class="datas">
-         <el-table
-        :data="tableData3.slice((page.currentpage-1)*page.pagesize,page.currentpage*page.pagesize)"
-        style="width: 100%; margin-top: 20px"
-        :cell-style="{width:'80px',height:'30px'}"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table
+          :data="tableData3.slice((page.currentpage-1)*page.pagesize,page.currentpage*page.pagesize)"
+          style="width: 100%; margin-top: 20px"
+          :cell-style="{width:'80px',height:'30px'}"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55"></el-table-column>
 
-        <el-table-column  label="序号"  type="index">
-             <!-- <span>{{(page.currentPage-1)*page.pagesize+(index+1)}}</span>
-         -->
-        </el-table-column>
-        <el-table-column label="名称" >
-            <template slot-scope="scope" >
+          <el-table-column label="序号" type="index">
+            <!-- <span>{{(page.currentPage-1)*page.pagesize+(index+1)}}</span>
+            -->
+          </el-table-column>
+          <el-table-column label="名称">
+            <template slot-scope="scope">
               <span
-                 
-                  @click="findlistson(scope.row.id,scope.row.pid,scope.row.name)"
-                  class="type"
-                >{{scope.row.name}}</span>
-          </template>
-          
-        </el-table-column>
-        
-      
-        <el-table-column label="操作" >
-           <template slot-scope="scope">
-                  <el-button size="mini" @click.stop="setting(scope.row.id,scope.row.name,scope.row.pid)">编辑</el-button>
-                  <el-button size="mini" type="danger" @click.stop="del(scope.row.id)">删除</el-button>
-                </template>
-        </el-table-column>
-      </el-table>
+                @click="findlistson($event,scope.row.id,scope.row.pid,scope.row.name)"
+                class="type"
+              >{{scope.row.name}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click.stop="setting(scope.row.id,scope.row.name,scope.row.pid)"
+              >编辑</el-button>
+              <el-button size="mini" type="danger" @click.stop="del(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
         <!-- <table class="tb_list" ref="tables">
           <thead>
             <tr>
@@ -116,41 +120,39 @@
               </td>
             </tr>
           </tbody>
-        </table> -->
+        </table>-->
 
-   <el-dialog title="组别添加" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="组别名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off" style="width: 210px;"></el-input>
-        </el-form-item>
-       
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="complete()">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="组别编辑" :visible.sync="dialogFormVisible1">
-      <el-form :model="form1">
-        <el-form-item label="组别名称" :label-width="formLabelWidth">
-          <el-input v-model="form1.name" autocomplete="off" style="width: 210px;"></el-input>
-        </el-form-item>
-      
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible1 = false">取 消</el-button>
-        <el-button type="primary" @click="queding()">确 定</el-button>
-      </div>
-    </el-dialog>
+        <el-dialog title="组别添加" :visible.sync="dialogFormVisible">
+          <el-form :model="form">
+            <el-form-item label="组别名称" :label-width="formLabelWidth">
+              <el-input v-model="form.name" autocomplete="off" style="width: 210px;"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="complete()">确 定</el-button>
+          </div>
+        </el-dialog>
+        <el-dialog title="组别编辑" :visible.sync="dialogFormVisible1">
+          <el-form :model="form1">
+            <el-form-item label="组别名称" :label-width="formLabelWidth">
+              <el-input v-model="form1.name" autocomplete="off" style="width: 210px;"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible1 = false">取 消</el-button>
+            <el-button type="primary" @click="queding()">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
     <div class="pages">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="page.currentPage"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="10"
+        :current-page="page.currentpage"
+        :page-sizes="[10, 20, 30, 40,60]"
+        :page-size="page.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="page.countpage"
       ></el-pagination>
@@ -171,10 +173,10 @@ import schoolcheck from "../../../components/schoolcheck";
 export default {
   data() {
     return {
-      dialogFormVisible:false,
-      dialogFormVisible1:false,
-      form:{name:''},
-      form1:{name:'',id:'',pid:""},
+      dialogFormVisible: false,
+      dialogFormVisible1: false,
+      form: { name: "" },
+      form1: { name: "", id: "", pid: "" },
       isbtnActive: false,
       // pid:
       returnpids: [],
@@ -184,10 +186,10 @@ export default {
       isactive: "",
       time: "",
       // 页码
-       page: {
+      page: {
         currentpage: 1,
         countpage: 10,
-        pagesize: "10",
+        pagesize: 10,
         flag: false
       },
 
@@ -215,7 +217,8 @@ export default {
         resource: "",
         desc: ""
       },
-      multipleSelection:[]
+      slicedata: [],
+      multipleSelection: []
     };
   },
   created() {
@@ -226,7 +229,7 @@ export default {
   },
 
   methods: {
-     handleSelectionChange(val) {
+    handleSelectionChange(val) {
       this.multipleSelection = val;
       console.log(val);
     },
@@ -273,7 +276,7 @@ export default {
       //传递查询条件返回相应页码的数据条数 查询条件当前页码，和每页显示条数
       var that = this;
       this.axios
-        .get("/api/v1/admin/unit/list/pid?pid=" + 0,)
+        .get("/api/v1/admin/unit/list/pid?pid=" + 0)
         .then(function(res) {
           if (res["data"].code == 0) {
             var data = res["data"]["data"];
@@ -292,7 +295,8 @@ export default {
               that.pid = pid;
             }
             that.page.countpage = that.tableData3.length;
-            // that.countpage = Math.ceil(that.tableData3.length / that.pagesize);
+            console.log(that.page.pagesize, that.page.currentpage);
+            // that.page.countpage = Math.ceil(that.tableData3.length / that.page.pagesize);
           } else {
             that.$message(res["data"]["msg"]);
           }
@@ -300,20 +304,35 @@ export default {
         .catch(function(err) {
           that.$message(err);
         });
-        //  source.cancel('不想请求了');
+      //  source.cancel('不想请求了');
     },
     // 分页·
+    getpagedata(pagesize, currentpage) {
+      var data = this.tableData3;
+      // 看看这数据一共能展示几页
+      var allpage = Math.ceil(data.length / pagesize);
+      // 1*20=0-19的index，2*20=20-39的index数据,n*20=（n-1）*20
+      //  只有当curpent<a时可以截取整断数据。=a截取到末尾
+      if (currentpage < allpage) {
+        this.slicedata = this.tableData3.slice(
+          (currentpage - 1) * pagesize,
+          currentpage * pagesize - 1
+        );
+      } else {
+        this.slicedata = this.tableData3.slice((currentpage - 1) * pagesize);
+      }
+
+      console.log(this.slicedata, this.tableData3);
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
-       this.page.pagesize = val;
-     
-
+      this.page.pagesize = val;
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-        this.page.currentpage = val;
+      this.page.currentpage = val;
     },
-    findlistson(id, pid, name) {
+    findlistson(event,id, pid, name) {
       // 传当前数据的id=11 找到所有pid=11的儿子数据 如果做返回还要找到父亲自己身上的pid 返回上一级返回所有同等类型的pid
       var obj = {};
       obj["id"] = id;
@@ -321,7 +340,6 @@ export default {
       this.returnName.push(obj);
       // 把当前returnname数组整合渲染到页面
       this.returnpids.push(pid);
-      console.log(this.returnpids, id, this.returnName);
       var that = this;
       this.axios
         .get("/api/v1/admin/unit/list/pid?pid=" + id)
@@ -336,7 +354,7 @@ export default {
           }
           that.tableData3 = arr;
           console.log(arr);
-            that.page.countpage = that.tableData3.length;
+          that.page.countpage = that.tableData3.length;
           // 修改和增加需要传当前点击后传的数据id就是即将显示所有儿子数据的pid,
           that.pid = id;
           if (arr.length == 0) {
@@ -346,16 +364,15 @@ export default {
     },
     // 返回
     return1(ids) {
-       var id
-     if (ids) {
-       id=ids
-     }else{
-          id = this.returnpids[this.returnpids.length - 1];
-      this.returnpids.splice(this.returnpids.length - 1, 1);
-      this.returnName.splice(this.returnName.length - 1, 1);
-      console.log(this.pid);
-     
-     }
+      var id;
+      if (ids) {
+        id = ids;
+      } else {
+        id = this.returnpids[this.returnpids.length - 1];
+        this.returnpids.splice(this.returnpids.length - 1, 1);
+        this.returnName.splice(this.returnName.length - 1, 1);
+        console.log(this.pid);
+      }
       if (id == 0) {
         this.getList();
         return;
@@ -373,6 +390,7 @@ export default {
             }
           }
           that.tableData3 = arr;
+          that.page.countpage = that.tableData3.length;
 
           // 修改和增加需要传当前儿子数据的pid,
           that.pid = id;
@@ -385,7 +403,7 @@ export default {
     // 增加数据开始
     addnumber() {
       // this.addflag = true;
-      this.dialogFormVisible=true;
+      this.dialogFormVisible = true;
     },
     //增加数据把填写的数据得到完成向后台提交数据
     complete() {
@@ -405,14 +423,14 @@ export default {
             var data = res["data"]["data"];
             that.tableData3.push(data);
             that.$message("添加组别成功");
-            that.dialogFormVisible=false
+            that.dialogFormVisible = false;
           } else {
             alert(res["data"]["msg"]);
           }
         });
     },
     //编辑后时提交数据
-    queding(id, item,pid) {
+    queding(id, item, pid) {
       var that = this;
       // 点击确定提交数据到后台=>数据增加到tables，同时把addflag变为false和关闭打开的编辑框
       console.log(id, item);
@@ -430,8 +448,8 @@ export default {
           console.log(res);
           if (res["data"]["code"] == 0) {
             that.$message("保存成功");
-            that.dialogFormVisible1=false
-            that.return1(pid)
+            that.dialogFormVisible1 = false;
+            that.return1(pid);
           } else {
             that.$message(res["data"]["msg"]);
           }
@@ -446,7 +464,7 @@ export default {
       console.log("zg");
     },
     // 点击编辑出现文本框
-    setting(id,name,pid) {
+    setting(id, name, pid) {
       console.log(id);
       this.form1.id = id;
       this.form1.name = name;
@@ -586,7 +604,7 @@ export default {
         //     }
         //   });
         // }
-        var newtable=this.multipleSelection
+        var newtable = this.multipleSelection;
         console.log(newtable);
         if (newtable.length == 0) {
           this.$message("请选择当前页数据导入");
@@ -768,8 +786,6 @@ a {
     font-size: 18px;
     cursor: pointer;
   }
-  
-
 }
 .setrule {
   div {

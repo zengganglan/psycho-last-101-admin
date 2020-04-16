@@ -173,7 +173,7 @@
         </ul>
            <fieldset style="border: 0;">
   <legend style="color:#499AD1;font-size: 16px;">操作提示
-        <a style="color:#499AD1;font-size: 16px;" href="http://localhost:8080/static/user.xlsx" download>【模板】</a>
+        <a style="color:#499AD1;font-size: 16px;" :href="links" download>【模板】</a>
 
   </legend>
   <ol style="font-size: 12px;">
@@ -216,6 +216,7 @@ import md5 from "blueimp-md5";
 export default {
   data() {
     return {
+       links:`http://${window.location.host}/static/user.xlsx`,
       values: {
         account: "",
         password: "",

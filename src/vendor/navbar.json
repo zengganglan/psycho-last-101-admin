@@ -73,7 +73,36 @@
 
       }
     ]
-  }
+  },
 
- 
+  "4": {
+    "sort": 4,
+    "id": 2,
+    "pid": 0,
+    "menu_route": "Growup",
+    "icon": "icon-edit",
+    "menu_name": "个人中心",
+    "items": [
+
+      {
+        "id": 7,
+        "pid": 1,
+        "menu_route": "Growup/comment",
+        "icon": null,
+        "menu_name": "个人信息",
+        "items": []
+
+      },
+      {
+        "id": 8,
+        "pid": 2,
+        "menu_route": "Growup/record",
+        "icon": null,
+        "menu_name": "个人档案",
+        "items": []
+
+      }
+
+    ]
+  }
 }

@@ -74,13 +74,16 @@ export default {
         var data = res["data"]["data"];
         console.log(data)
         data =global.treeData(data, 'id', 'pid', 'items')
-        var arr=[]
+        if (data.length>0) {
+            var arr=[]
         that.func(data,arr)
         if (!that.inputName) {
            that.newvalue = arr[0]['name'];
            that.item=arr[0]
            console.log(that.item)
         }
+        }
+      
        that.data2=arr
 
       });

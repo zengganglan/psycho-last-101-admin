@@ -27,21 +27,24 @@
         <tr>
           <td>学生测试结果许可：</td>
           <td>
-            <el-switch v-model="data.stu_view" active-color="#13ce66" inactive-color="#ff4949" active-value="1"
+            <el-switch v-model="data.stu_view"  active-text="开"
+                inactive-text="关" active-color="#13ce66" inactive-color="#ff4949" active-value="1"
                 inactive-value="0"></el-switch>
           </td>
         </tr>
         <tr>
           <td>测前学生资料完善许可：</td>
           <td>
-            <el-switch v-model="data.profile_check" active-color="#13ce66" inactive-color="#ff4949" active-value="1"
+            <el-switch v-model="data.profile_check"  active-text="开"
+                inactive-text="关" active-color="#13ce66" inactive-color="#ff4949" active-value="1"
                 inactive-value="0"></el-switch>
           </td>
         </tr>
         <tr>
           <td>学生自测功能开发：</td>
           <td>
-            <el-switch v-model="data.self_testing" active-color="#13ce66" inactive-color="#ff4949" active-value="1"
+            <el-switch v-model="data.self_testing"  active-text="开"
+                inactive-text="关" active-color="#13ce66" inactive-color="#ff4949" active-value="1"
                 inactive-value="0"></el-switch>
           </td>
         </tr>

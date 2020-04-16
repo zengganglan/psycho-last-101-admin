@@ -455,9 +455,13 @@ export default {
     // 分页·
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+               this.page.size = val;
+      this.getList(this.page.currentPage, this.page.size) 
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+ this.page.currentPage = val;
+      this.getList(this.page.currentPage, this.page.size) 
       },
     // 增加数据
     addnumber() {
@@ -750,8 +754,8 @@ export default {
       }
     }
     .datas {
-      height: 640px;
-      border: 1px solid #e6e6e8;
+min-height: 200px;     
+ border: 1px solid #e6e6e8;
       margin: 0 50px;
       margin-top: 30px;
       background-color: #ffffff;

@@ -299,6 +299,9 @@ export default {
             if (res["data"]["data"]["user_ext"]) {
               for (var key in res["data"]["data"]["user_ext"]) {
                 that.user_ext[key] = res["data"]["data"]["user_ext"][key];
+                 if (!isNaN(res["data"]["data"][key] - 0)) {
+            that.user_ext[key] = res["data"]["data"][key] - 0;
+          }
               }
             }
             if (res["data"]["data"]["user"]) {

@@ -30,7 +30,7 @@
               <td>
                 <!-- id:35,43,12,29, 31,-->
                 <el-select
-                 clearable
+                  clearable
                   filterable
                   remote
                   reserve-keyword
@@ -64,8 +64,8 @@
               <td>有效性</td>
               <td>
                 <el-select name v-model="form2.valid" id="type" clearable>
-                  <el-option value="0" label="有效"></el-option>
-                  <el-option value="1" label="无效"></el-option>
+                  <el-option value="1" label="有效"></el-option>
+                  <el-option value="0" label="无效"></el-option>
                 </el-select>
               </td>
             </tr>
@@ -74,7 +74,7 @@
               <td>
                 <el-select name v-model="form2.test_type" id="type" clearable>
                   <el-option value="2" label="自测"></el-option>
-                  <el-option value="1" label='普测'></el-option>
+                  <el-option value="1" label="普测"></el-option>
                 </el-select>
               </td>
               <td>姓名</td>
@@ -84,9 +84,9 @@
               <td>时间</td>
               <td>
                 <el-date-picker
-                style="width:220px"
-                 format="yyyy-MM-dd HH:mm:ss"
-                 value-format='yyyy-MM-dd HH:mm:ss'
+                  style="width:220px"
+                  format="yyyy-MM-dd HH:mm:ss"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   v-model="times"
                   type="datetimerange"
                   range-separator="至"
@@ -141,6 +141,7 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="scale_name" label="量表名称"></el-table-column>
         <el-table-column prop="stu_name" label="学生"></el-table-column>
+        <el-table-column prop="job_num" label="学号"></el-table-column>
         <el-table-column prop="start_test_time" label="测试时间"></el-table-column>
         <el-table-column prop="sex" label="性别"></el-table-column>
         <el-table-column prop="age" label="年龄"></el-table-column>
@@ -248,7 +249,7 @@ export default {
         unit_name: "",
         scale_id: ""
       },
-      times:"",
+      times: "",
       form2: {
         scale_id: "",
         scale_type: "",
@@ -257,7 +258,7 @@ export default {
         valid: "",
         name: "",
         start_time: "",
-        unit_group_id:"",
+        unit_group_id: "",
         expire_time: ""
       },
       formLabelWidth: "100px",
@@ -456,18 +457,25 @@ export default {
       console.log(this.times);
       var obj = {};
       if (this.times) {
-        this.form2['start_time']=this.times[0]
-        this.form2['expire_time']=this.times[1]
+        this.form2["start_time"] = this.times[0];
+        this.form2["expire_time"] = this.times[1];
       }
       for (var key in this.form2) {
         if (this.form2[key]) {
           obj[key] = this.form2[key];
         }
       }
-      console.log(this.form2,obj)
-      this.getlist(this.page.currentpage, this.page.pagesize,obj);
+      console.log(this.form2, obj);
+      this.getlist(this.page.currentpage, this.page.pagesize, obj);
     },
-    getlist(currentpage, pagesize, w,id) {
+    formatDuring(mss) {
+      var days = parseInt(mss / (1000 * 60 * 60 * 24));
+      var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = (mss % (1000 * 60)) / 1000;
+      return hours + " : " + minutes + " : " + seconds;
+    },
+    getlist(currentpage, pagesize, w, id) {
       // 获得列表数据
       // console.log(w)
       //传递查询条件返回相应页码的数据条数 查询条件当前页码，和每页显示条数
@@ -476,10 +484,10 @@ export default {
       }
       var that = this;
       this.axios
-        .post("/api/v1/admin/scale/getTestResultList" , {
+        .post("/api/v1/admin/scale/getTestResultList", {
           page: currentpage,
           size: pagesize,
-          w:w,
+          w: w
         })
         .then(function(res) {
           if (res["data"].code == 0) {
@@ -490,20 +498,27 @@ export default {
                 var a = new Date().getTime() - new Date(item["birth_date"]);
                 var hours = a / 1000 / 60 / 60;
                 var year = Math.floor(hours / (24 * 30 * 12));
-                console.log(year);
+                // console.log(year);
                 item["age"] = year;
               } else {
                 item["age"] = "null";
               }
-              item["times"] = moment(
-                moment(item["end_test_time"]) - moment(item["start_test_time"])
-              ).format("HH:mm:ss");
+              var mm =
+                new Date(item["end_test_time"]).valueOf() -
+                new Date(item["start_test_time"]).valueOf();
+
+              var msTime = moment.duration(mm);
+              var hours = moment.duration(msTime).hours(); //转为小时，值为1
+              var mins = moment.duration(msTime).minutes(); //转为分钟，值为20
+              var second = moment.duration(msTime).seconds(); //转为秒，值为0
+              item["times"] = hours + ":" + mins + ":" + second;
+
               if (item.sex == 0) {
                 item.sex = "女";
               } else {
                 item.sex = "男";
               }
-              if (item.valid == 0) {
+              if (item.valid - 0 == 1) {
                 item.valid = "有效";
               } else {
                 item.valid = "无效";

@@ -14,9 +14,9 @@
           </el-checkbox-group>
         </li>
         <li>
-          <!-- <el-button type="primary" plain @click="archive">
+          <el-button type="primary" plain @click="archive">
             <i class="iconfont icon-daochu1"></i>浏览档案
-          </el-button> -->
+          </el-button>
 
           <!-- <input type="text" value id="person">
               <i class="iconfont icon-sousuo" @click="showtable()"></i>
@@ -24,15 +24,14 @@
         </li>
       </ul>
     </div>
-    
     <div class="body">
       <div class="block">
-        <el-timeline >
-          <el-checkbox
+        <el-timeline>
+          <!-- <el-checkbox
             :indeterminate="isIndeterminate"
             v-model="checkAll"
             @change="handleCheckAllChange"
-          >全选</el-checkbox>
+          >全选</el-checkbox>-->
           <el-checkbox-group v-model="checked" @change="handleCheckedCitiesChange">
             <el-timeline-item
               placement="top"
@@ -44,10 +43,16 @@
               :key="index"
               :timestamp="activity.timestamp"
             >
-              <el-card :class="{aClass: activity.types==1,bClass: activity.types==2,mClass: activity.types==3,nClass: activity.types==4}">
-                <el-checkbox :label="activity.id" :key="activity.id">
+              <el-card
+                :class="{aClass: activity.types==1,bClass: activity.types==2,mClass: activity.types==3,nClass: activity.types==4}"
+              >
+                <el-checkbox :label="activity.idnumber" :key="activity.id">
                   <h4>{{activity.timestamp}}</h4>
-                  <p>{{activity.content}}</p>
+
+                  <p v-if="activity.types==1">留言内容：{{activity.content}}</p>
+                  <p v-else-if="activity.types==2">咨询内容：{{activity.problem}}</p>
+                  <p v-else-if="activity.types==3">访谈干预内容：{{activity.proc_idea}}</p>
+                  <p v-if="activity.types==4">测评量表{{activity.scale_name}}</p>
                 </el-checkbox>
               </el-card>
             </el-timeline-item>
@@ -69,14 +74,14 @@
 
 <script>
 import headson from "../../../components/headson";
-
+import moment from 'moment'
 export default {
   data() {
     return {
       type: [],
       checkAll: false,
       isIndeterminate: true,
-      checked: [1, 2],
+      checked: [],
       headson: ["学生个人档案", "个人档案资料导出记录"],
       group: [
         {
@@ -87,102 +92,151 @@ export default {
           type: 2,
           name: "咨询"
         },
-        {
-          type: 3,
-          name: "访谈"
-        },
+        // {
+        //   type: 3,
+        //   name: "访谈"
+        // },
         {
           type: 4,
           name: "测评"
         }
       ],
-         activities: [
-        {
-          id: 1,
-          content: "更新留言",
-          timestamp: "2018-03-12 20:46",
-          size: "large",
-          type: "primary",
-          icon: "el-icon-more",
-          types: 1
-        },
-        {
-          id: 2,
-
-          content: "咨询记录",
-          timestamp: "2018-04-03 20:46",
-          color: "#0bbd87",
-          types: 2
-        },
-        {
-          id: 3,
-
-          content: "访谈记录",
-          timestamp: "2018-04-02 20:46",
-          size: "large",
-          types: 3
-        },
-        {
-          id: 4,
-
-          content: "留言",
-          timestamp: "2018-04-01 20:46",
-          types: 1
-        },
-        {
-          id: 5,
-          content: "测评",
-          timestamp: "2018-03-03 20:46",
-          types: 4
-        }
-      ],
-      
-      activities1: [
-        {
-          id: 1,
-          content: "更新留言",
-          timestamp: "2018-04-12 20:46",
-          size: "large",
-          type: "primary",
-          icon: "el-icon-more",
-          types: 1
-        },
-        {
-          id: 2,
-
-          content: "咨询记录",
-          timestamp: "2018-04-03 20:46",
-          color: "#0bbd87",
-          types: 2
-        },
-        {
-          id: 3,
-
-          content: "访谈记录",
-          timestamp: "2018-04-03 20:46",
-          size: "large",
-          types: 3
-        },
-        {
-          id: 4,
-
-          content: "留言",
-          timestamp: "2018-04-03 20:46",
-          types: 1
-        },
-        {
-          id: 5,
-          content: "测评",
-          timestamp: "2018-04-03 20:46",
-          types: 4
-        }
-      ]
+      activities: [],
+      activities1: [],
+      useid: this.$route.query.id,
+      alldata: []
     };
   },
   created() {
     console.log(this.checked);
+    this.messages();
+    // this.zixun()
+    // this.fangtan()
   },
   methods: {
+    alldata1() {
+      // // 因为all是axios的静态方法所以虽然能正常请求但是控制台报错需要自己设置
+      // this.axios.all([ this.messages(),this. zixun()
+      // ]).then(this.axios.spread((mess,counse,coach)=>{
+      //     console.log(mess,counse,coach)
+      // }))
+    },
+    messages() {
+      //  alert(`获取了${a}`);
+      var that = this;
+      this.axios
+        .post(`api/v1/user/message/list`,{
+          page: 1,
+          size: 60,
+        })
+        .then(res1 => {
+          var data1 = res1["data"]["data"]['list'];
+          data1.map((item1, index1) => {
+            item1["types"] = 1;
+            item1["timestamp"] = item1["create_time"];
+
+            that.alldata.push(item1);
+          });
+          console.log(data1);
+          this.axios
+            .get(`api/v1/counsel/getSelfInfo`)
+            .then(res2 => {
+              console.log(res2);
+              var data2 = res2["data"]["data"];
+              data2.map((item2, index2) => {
+                item2["types"] = 2;
+                item2["timestamp"] = item2["start_time"];
+                that.alldata.push(item2);
+              });
+                that.getscale()
+
+            
+
+               
+            });
+        });
+    },
+    getscale(uid) {
+      // 获得列表数据
+      // console.log(w)
+      //传递查询条件返回相应页码的数据条数 查询条件当前页码，和每页显示条数
+
+      var that = this;
+      this.axios
+        .post("api/v1/scale/getScaleTestResult" , {
+          page: 1,
+          size: 60,
+        })
+        .then(function(res) {
+          if (res["data"].code == 0) {
+            var tableData = res["data"]["data"]["list"];
+            tableData.map((item, index) => {
+                item["types"] = 4;
+                item["timestamp"] = item["start_test_time"];
+              if (item["birth_date"]) {
+                var a = new Date().getTime() - new Date(item["birth_date"]);
+                var hours = a / 1000 / 60 / 60;
+                var year = Math.floor(hours / (24 * 30 * 12));
+                console.log(year);
+                item["age"] = year;
+              } else {
+                item["age"] = "null";
+              }
+              item["times"] = moment(
+                moment(item["end_test_time"]) - moment(item["start_test_time"])
+              ).format("HH:mm:ss");
+              if (item.sex == 0) {
+                item.sex = "女";
+              } else {
+                item.sex = "男";
+              }
+              if (item.valid == 0) {
+                item.valid = "有效";
+              } else {
+                item.valid = "无效";
+              }
+              if (item.type == 2) {
+                item.type = "自测";
+              } else {
+                item.type = "普查";
+              }
+                that.alldata.push(item)
+            });
+            // 四个请求请求完毕
+               console.log(that.alldata)
+                  that.alldata = that.sortDataArray(that.alldata);
+                  that.alldata.map((item, index) => {
+                    item["idnumber"] = index + 1;
+                    that.checked.push(item["idnumber"]);
+                  });
+
+                  that.activities = that.alldata;
+                  that.activities1 = that.alldata;
+                  localStorage.setItem("alldata", JSON.stringify(that.alldata));
+          }
+        });
+    },
+    sortDataArray(dataArray) {
+      return dataArray.sort(function(a, b) {
+        return Date.parse(b.timestamp) - Date.parse(a.timestamp);
+      });
+    },
+
+    zixun() {
+      this.axios
+        .get(`api/v1/admin/counsel/getClientListByUID?uid=${this.useid}`)
+        .then(res => {
+          console.log(res);
+        });
+    },
+    fangtan() {
+      this.axios
+        .get(`api/v1/admin/coach/listByUID?uid==${this.useid}`)
+        .then(res => {
+          console.log(res);
+        });
+    },
+    cepin() {},
     getlist() {
       var type = this.type;
       var data = [];
@@ -203,7 +257,7 @@ export default {
         this.checked = [];
 
         this.activities.map((item, index) => {
-          this.checked.push(item.id);
+          this.checked.push(item.idnumber);
         });
       } else {
         this.checked = [];
@@ -230,7 +284,12 @@ export default {
         checkedCount > 0 && checkedCount < this.activities.length;
     },
     archive() {
-      this.$router.push({ path: "/student/archives", query: { id: 27 } });
+      // 数组this.checked传到另一个页面。所有改变的数据存到locallstroage 去查询。
+      localStorage.setItem("checked", JSON.stringify(this.checked));
+      this.$router.push({
+        path: "/student/yaoqing",
+        query: { useid: this.useid }
+      });
     },
     changefun() {
       console.log(this.type);
@@ -349,16 +408,16 @@ export default {
     height: 100px;
   }
 }
-.aClass{
-  background-color: #BDD8E1;
+.aClass {
+  background-color: #bdd8e1;
 }
-.bClass{
+.bClass {
   background-color: rgb(232, 193, 186);
 }
-.mClass{
+.mClass {
   background-color: rgb(206, 188, 228);
 }
-.nClass{
-  background-color: #D8DAD9;
+.nClass {
+  background-color: #d8dad9;
 }
 </style>

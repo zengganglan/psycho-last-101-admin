@@ -127,7 +127,7 @@
                 <el-button size="small" type="primary">点击上传测试题</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
               </el-upload>
-              <el-button size="small" type="primary">    <a style="color:#fff;font-size: 16px;" href="http://localhost:8080/static/scale.xlsx" download>【点击下载模板】</a>
+              <el-button size="small" type="primary">    <a style="color:#fff;font-size: 16px;" :href="links" download>【点击下载模板】</a>
 </el-button>
             </td>
           </tr>
@@ -211,12 +211,14 @@ export default {
       formLabelWidth: "100px",
       // 头部组件信息
       headson: ["系统量表", "系统量表编辑"],
-      topicflag: false
+      topicflag: false,
+      links:`http://${window.location.host}/static/scale.xlsx`
     };
   },
   created() {
     this.getdetail(this.$route.query.id);
     this.getquestion(this.$route.query.id);
+    console.log(window.location.host)
     // this.changeobj(this.tableData);
   },
   methods: {

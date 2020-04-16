@@ -251,7 +251,7 @@ export default {
             that.tableData3=res["data"]["data"]
             that.$store.commit("setGroup")
          }else{
-           this.$message(res['data']['msg'])
+           that.$message(res['data']['msg'])
          }
             console.log(that.tableData3)
 

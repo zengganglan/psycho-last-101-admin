@@ -16,6 +16,7 @@
     <ul>
       <li class="data1" v-if="tabindex==1">
         <div class="luru">批量录入设置</div>
+        <span style="font-size: 12px;">[注：如果手动批量录入从起止学号开始递增,数量包括起止学号，如果学号已经存在则默认跳过不会录入这数据]</span>
         <ul class="a1">
           <li>
             <span>范围：</span>
@@ -108,7 +109,7 @@
         </ul>
         <fieldset style="border: 0;">
   <legend style="color:#499AD1;font-size: 16px;">操作提示： 
-    <a style="color:#499AD1;font-size: 16px;" href="http://localhost:8080/static/user.xlsx" download>【模板】</a>
+    <a style="color:#499AD1;font-size: 16px;" :href="links" download>【模板】</a>
 </legend>
   <ol style="font-size: 12px;">
     <li>Excel文件只能包含1个数据表（多余的表可以右键删除或隐藏，无论是否有数据都不能出现），且数据表不能有单元格合并情况，第一行为表头，从第二行开始记录数据；</li>
@@ -296,6 +297,8 @@ import pagination from "../../../components/pagination";
 export default {
   data() {
     return {
+             links:`http://${window.location.host}/static/user.xlsx`,
+
       disabled:true,
              isbtnActive:false,
 
@@ -352,7 +355,7 @@ export default {
       delId: "",
       //页面初始化请求数据赋值
       dialogVisible: false,
-      thead: ["学号", "姓名", "性别", "班级", "手机", "注册时间", "操作"],
+      thead: ["学号", "姓名", "性别", "班级", "手机", "注册时间"],
       tableData3: []
     };
   },
@@ -428,7 +431,11 @@ export default {
         .post("/api/v1/admin/user/audit", {
           id: newarr,
         }).then(function(res){
-            
+             if (res['data']['code']==0) {
+             alert('审核通过')
+           }else{
+             res['data']['msg']
+           }
         })
     },
     // 把班级树形变为扁平结构
@@ -737,7 +744,9 @@ export default {
       this.axios.post("/api/v1/admin/user/addStudent", obj).then(function(res) {
         console.log(res);
         if (res["data"]["code"] == 0) {
-          that.$message("手动导入成功");
+          var a = that.number-res['data']["data"]['effect_row']
+             that.$message("手动导入成功"+res['data']["data"]['effect_row']+'条数据'+','+`${a}条数据的学号已重复`);
+
         } else {
           that.$message(res["data"]["msg"]);
         }

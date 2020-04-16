@@ -8,6 +8,7 @@
          <transition name="fade" mode="out-in">
             <router-view>1</router-view>
         </transition>
+        
         </div>
     </div>
 </template>

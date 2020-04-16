@@ -2,9 +2,9 @@
   <div class="scrren">
     <!-- 初始页面 -->
     <div class="top1">
-      <div class="left">
+      <!-- <div class="left">
         <img src="../../assets/2018-12-28_153635.png" alt style="width:50px;height:50px;">
-      </div>
+      </div> -->
       <div class="right">
         <div class="help">
           <span>{{role.name}}</span>
@@ -17,8 +17,8 @@
     <div class="box">
       <div class="box1">
         <div class="box11">
-          <h4>最新通知</h4>
-          <p>&nbsp;&nbsp;   你们好本土化、多维度的专业生涯测评，帮助学生选择合适的专业领域本土化、多维度的专业生涯测评，帮助学生选择合适的专业领域本土化、多维度的专业生涯测评，帮助学生选择合适的专业领域</p>
+          <h4>通知</h4>
+          <p>&nbsp;&nbsp;   你们好本土化、多维度的专业生涯测评，帮助学生选择合适的专业领域本土化、多维度的专业生涯测评，帮助学生选择合适的专业领域</p>
         </div>
         <div class="box22">
           <div class="a1" @click="first1">

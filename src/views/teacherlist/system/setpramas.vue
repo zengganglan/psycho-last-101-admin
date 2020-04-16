@@ -49,6 +49,8 @@
              <el-switch
                 v-model="data.edit_stu"
                 active-color="#13ce66"
+                 active-text="开"
+                inactive-text="关"
                 active-value="1"
                 inactive-value="0"               
                 inactive-color="#ff4949"
@@ -58,7 +60,8 @@
         <tr>
           <td>自注册审核许可</td>
           <td>
-            <el-switch v-model="data.register_audit" active-color="#13ce66" inactive-color="#ff4949"  active-value="1"
+            <el-switch v-model="data.register_audit"  active-text="开"
+                inactive-text="关" active-color="#13ce66" inactive-color="#ff4949"  active-value="1"
                 inactive-value="0"></el-switch>
           </td>
         </tr>
@@ -67,7 +70,8 @@
         <tr>
           <td>是否允许学生评价：</td>
           <td>
-             <el-switch v-model="data.stu_comment" active-color="#13ce66" inactive-color="#ff4949"  active-value="1"
+             <el-switch v-model="data.stu_comment"  active-text="开"
+                inactive-text="关" active-color="#13ce66" inactive-color="#ff4949"  active-value="1"
                 inactive-value="0"></el-switch>
           </td>
         </tr>

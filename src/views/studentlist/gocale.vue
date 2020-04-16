@@ -109,8 +109,8 @@ export default {
       // 按钮事件 传值
       this.dialogFormVisible = true;
       this.lbId=row.id
-      this.name=row.view_name
-       // this.$router.push({path:'/studentindex/calequestion',query:{scaleid:this.lbId,name:this.name}})
+      this.name=row.view_name+row.short_name
+      //  this.$router.push({path:'/studentindex/calequestion',query:{scaleid:this.lbId,name:this.name}})
 
     },
     // 分页·
@@ -134,6 +134,9 @@ export default {
       var canvas = document.getElementById("canvas");
       console.log(this.lbId);
       // http://115.159.209.142:7006 服务器域名
+      if (!this.name) {
+        this.name='无'
+      }
       
       QRCode.toCanvas(canvas, "http://115.159.209.142:7006/#/studentindex/caleindex?id="+this.lbId+'&name='+this.name, function(
         error

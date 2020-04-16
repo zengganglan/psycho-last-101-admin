@@ -353,8 +353,11 @@ export default {
             // Cookies.set("detail", res["data"]["data"]);
             // 扩展信息，个人刚开始返回没有这个数据表示为空
             if (res["data"]["data"]["user_ext"]) {
-              for (var key in that.user_ext) {
+              for (var key in that.user_ext) {                
                 that.user_ext[key] = res["data"]["data"]["user_ext"][key];
+                 if (!isNaN(res["data"]["data"][key] - 0)) {
+            that.user_ext[key] = res["data"]["data"][key] - 0;
+          }
               }
             }
             if (res["data"]["data"]["user"]) {

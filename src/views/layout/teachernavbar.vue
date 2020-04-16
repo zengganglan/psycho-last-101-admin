@@ -124,7 +124,7 @@ export default {
           });
           sessionStorage.setItem('buttonspermissions',JSON.stringify(that.permission))
         //  console.log(JSON.parse(sessionStorage.getItem('buttonspermissions')))
-          //2根据flag在树形接口过滤掉权限规则，如果当前对象的item里面子数据flag为0就把把当前对象设置为空数组[]
+          //2根据flag在树形接口过滤掉权限规则，如果当前对象的item里面子数据flag为0就把把当前对象设置为空数组[]  status是页面禁用权限，auth是接口权限
           function a(group,obj) {
             for (var key in group) {              
                 if (group[key]["items"].length !== 0) {
@@ -154,6 +154,7 @@ export default {
                }
             }
           });
+          console.log(navbardata)
           that.navbardata = navbardata;
           // 刷新匹配路由渲染当前状态路由,根据当前路由匹配左侧菜单栏双向状态改变
 

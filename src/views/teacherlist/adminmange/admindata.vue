@@ -153,22 +153,26 @@
         </div>
       </li>
       <li class="data2" v-else-if="tabindex==2">
+        <span style="color:#6999fd;fontsize:12px">提示：如果目标组别没有对应的数据集或者数据集为空则不能进行迁移数据
+</span>
+                        
         <ul>
           <li class="zy1">
             <span>原位：</span>
             <div class="schoolcheck1">
-              <schoolcheck ref="schoolcheck1"></schoolcheck>
+              <schoolcheck ref="schoolcheck11"></schoolcheck>
             </div>
           </li>
           <li class="zy2">
             <span>目标：</span>
             <div class="schoolcheck1">
-              <schoolcheck ref="schoolcheck1"></schoolcheck>
+              <schoolcheck ref="schoolcheck22"></schoolcheck>
             </div>
           </li>
         </ul>
-        <div class="submit" v-if="submitflag">提交</div>
+        <div class="submit" v-if="submitflag" @click="changegroup">提交</div>
         <div class="complet" v-else>操作完成</div>
+
       </li>
       <li class="data3" v-else>
         <div class="search">
@@ -357,6 +361,21 @@ export default {
     this.getList(this.page.currentPage, this.page.size);
   },
   methods: {
+    changegroup(){
+             var a=this.$refs.schoolcheck11.item.id-0
+             var b=this.$refs.schoolcheck22.item.id-0
+             var that = that
+            //  无数据集调换失败有可能你转移的这个班级并没有学生存在
+             this.axios.get(`api/v1/admin/user/changeUnitGroup?srcid=${a}&dstid=${b}`).then(function(res){
+                 if (res['data']['code']==0) {
+                     alert('转移资料成功')
+                 }else{
+                    alert(res['data']['msg'])
+                 }
+             })
+
+        
+    },
     // getList获取列表数据给tableData3赋值
     getList(currentPage, pagesize,w) {
       //传递查询条件请求数据返回相应页码的数据条数 查询条件当前页码，和每页显示条数
@@ -447,7 +466,11 @@ export default {
         repassword: md5(this.values.againpass),
       }
       this.axios.post('/api/v1/admin/user/pwdReset',obj).then((res)=>{
-
+           if (res['data']['code']==0) {
+             alert('重置密码成功')
+           }else{
+             res['data']['msg']
+           }
       })
     },
     //编辑时取消
@@ -870,6 +893,8 @@ a {
       li {
         text-align: center;
         position: relative;
+       height: 50px;
+
         span {
           position: absolute;
           left: -20px;
@@ -878,7 +903,6 @@ a {
 
       li:nth-child(1) {
         width: 300px;
-        height: 50px;
         margin-left: 20px;
         .schoolcheck1 {
           display: inline-block;

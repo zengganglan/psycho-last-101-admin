@@ -2,11 +2,11 @@
   <div class="main">
     <headson :headson="headson"></headson>
 
-    <div class="search">
+    <!-- <div class="search">
       <span>关键字</span>
       <input type="text">
       <i data-v-30c34ff0 class="iconfont icon-sousuo"></i>
-    </div>
+    </div> -->
     <div class="data">
       <div class="work">
         <span class="export" @click="handleDownload" :class="{ btnactive: isbtnActive }">
