@@ -163,7 +163,7 @@ export default {
 
       var that = this;
       this.axios
-        .post("api/v1/scale/getScaleTestResult" , {
+        .post("/api/v1/scale/getScaleTestResult" , {
           page: 1,
           size: 60,
         })

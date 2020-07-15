@@ -142,7 +142,7 @@ export default {
               } else {
                 item.sex = "男";
               }
-              if (item.valid == 0) {
+              if (item.valid-0 == 1) {
                 item.valid = "有效";
               } else {
                 item.valid = "无效";

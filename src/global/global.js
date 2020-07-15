@@ -29,6 +29,7 @@ export const global={
       formatJson:function(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => v[j]));
       },
+      
       // 封装函数树节点转化为扁平
       NestedToFlat(group) { 
         var res = []

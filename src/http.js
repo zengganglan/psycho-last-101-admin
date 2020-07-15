@@ -41,6 +41,7 @@ Axios.interceptors.request.use(
     ...config.params            
   }       
  }
+ console.log(config)
    
     return config
   },

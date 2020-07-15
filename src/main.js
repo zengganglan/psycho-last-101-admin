@@ -75,7 +75,7 @@ Vue.directive('has', {
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   //如果跳转页面存在uid表示登陆过 可以跳转，否则不能跳转
-  var whitelist = ["/login", "/register", "/getUserPassword", '/studentindex/gpartical',"/studentindex/gocale",'/studentindex/caleindex','/studentindex/calequestion','/studentindex/caleresult']
+  var whitelist = ["/login", "/register", "/getUserPassword", '/studentindex/gpartical',"/studentindex/gocale","/studentindex/questionLogin",'/studentindex/caleindex','/studentindex/calequestion','/studentindex/caleresult']
   if (store.getters.token) {
     next()
     var role = store.state.userInfo

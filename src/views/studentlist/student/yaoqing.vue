@@ -486,7 +486,7 @@ export default {
     },
     getNewsInfo() {
       // 获取新闻详情
-      this.$http.get("api/getnew/" + this.id).then(result => {
+      this.$http.get("/api/getnew/" + this.id).then(result => {
         if (result.body.status === 0) {
           this.newsinfo = result.body.message[0];
         } else {
@@ -682,7 +682,7 @@ export default {
       console.log(id);
       var that = this;
       that.axios
-        .get("api/v1/user/viewDetails")
+        .get("/api/v1/user/viewDetails")
         .then(function(res) {
           console.log(res);
           var detail = res["data"]["data"]

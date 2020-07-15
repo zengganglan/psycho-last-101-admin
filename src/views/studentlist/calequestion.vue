@@ -80,6 +80,8 @@
 </template>
 <script>
 import $ from "jquery";
+import Cookies from "js-cookie";
+
 
 export default {
   data() {
@@ -205,50 +207,62 @@ export default {
       console.log(that.topic[that.num - 1], that.selected);
     },
     submit() {
+      if (!Cookies.get("userToken")) {
+        this.$message('请前去登录再提交答案查看结果')
+         this.$router.push({
+        path: "/studentindex/questionLogin",
+        query: { id: this.$route.query.scaleid, name: this.name }
+      });
+      return;
+      }
+     
       var that = this;
       var answers = [];
+       var noNnswer = [];
       this.topic.map((item, index) => {
         if (item["selected"] && item["selected"].length > 0) {
           console.log(item.selected);
           answers.push(item.selected);
         } else {
           answers.push(null);
+           noNnswer.push(index+1);
+
         }
       });
+        if (noNnswer.length > 0) {
+        var msg = "无答题：";
+        noNnswer.map((item, index) => {
+          msg = msg + item + ",";
+        });
+        alert("有漏题，请答完题目在提交。" + msg);
+        return;
+      }
       answers.map((item, index) => {
         if (Array.isArray(item) && item.length == 1) {
           answers[index] = item[0];
         }
       });
-      console.log(answers);
+       
+      this.axios
+        .post("/api/v1/scale/submitAnswer", {
+          scale_id: that.$route.query.scaleid,
+          start_test_time: that.starttime,
+          answer: answers
+        })
+        .then(res => {
+          if (res["data"]["code"] == 0) {
+            localStorage.setItem('scaleresult',JSON.stringify(res.data.data))
              that
-              .$alert("<strong>" +'提交成功' + "</strong>", "提示", {
+              .$alert("<strong>" +'提交成功查看结果吗' + "</strong>", "提示", {
                 dangerouslyUseHTMLString: true
               })
               .then(() => {
-                // that.$router.push({'path':'/studentindex/caleresult'})
-                that.$router.go(-1);
+                 that.$router.push({'path':'/studentindex/caleresult',query:{starttime:that.starttime,name:that.name}})
               });
-      // this.axios
-      //   .post("/api/v1/scale/submitSelfTest", {
-      //     scale_id: that.$route.query.id,
-      //     start_test_time: that.starttime,
-      //     answer: answers
-      //   })
-      //   .then(res => {
-      //     if (res["data"]["data"] == 0) {
-      //       // that.$message("提交成功");
-      //        that
-      //         .$alert("<strong>" +'提交成功查看结果吗' + "</strong>", "提示", {
-      //           dangerouslyUseHTMLString: true
-      //         })
-      //         .then(() => {
-      //           that.$router.go(-1);
-      //         });
-      //     }else{
-      //         that.$message(res["data"]["msg"])
-      //     }
-      //   });
+          }else{
+              that.$message(res["data"]["msg"])
+          }
+        });
     },
     golin(){
         this.$router.go(-1)

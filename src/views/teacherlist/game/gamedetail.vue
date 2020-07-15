@@ -70,7 +70,7 @@
         :on-exceed="handleExceed"
         :file-list="fileList"
       >
-        <div slot="tip" class="el-upload__tip">只能上传xsl/xslx文件，且不超过500kb</div>
+        <div slot="tip" class="el-upload__tip">只能上传xls/xlsx文件，且不超过500kb</div>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传文件</el-button>
       </el-upload>
 
@@ -224,7 +224,7 @@ export default {
               //  let fileName = res.headers['content-disposition']
               let blob = new Blob([res.data], {
                 type:
-                  "application/actet-stream;charset=utf-8"
+                 'application/vnd.ms-excel'
               });
               let objectUrl = URL.createObjectURL(blob)
               window.location.href = objectUrl;

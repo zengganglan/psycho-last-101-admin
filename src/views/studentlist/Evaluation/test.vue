@@ -242,6 +242,7 @@ export default {
         answer: answers
       };
       if (that.$route.query.id) {
+        //普测 
         obj["answer_id"] = that.$route.query.id;
       }
       this.axios.post("/api/v1/scale/submitAnswer", obj).then(res => {

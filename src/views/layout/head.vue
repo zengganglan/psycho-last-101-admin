@@ -4,6 +4,7 @@
       <span class="logo">
           <img v-if="$store.state.logo" :src="$store.state.logo" alt />
          <img v-else src="../../assets/images/e2a51aafad9aa42d23ca511382c1784.png" alt />
+
       </span>
       <div class="a2">
         <div class="h-left">{{schoolname}}心理管理系统</div>

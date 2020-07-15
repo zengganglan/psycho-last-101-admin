@@ -349,7 +349,7 @@ export default {
           that.$message("没有修改信息请返回");
         return 
       }
-      that.axios.post('api/v1/admin/user/editUser?id='+that.id,obj).then(function(res){
+      that.axios.post('/api/v1/admin/user/editUser?id='+that.id,obj).then(function(res){
         console.log(res)
          if (res["data"]["code"] == 0) {
             that.$message("编辑校长用户成功");

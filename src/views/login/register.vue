@@ -248,7 +248,7 @@ export default {
     },
     getgroup(id) {
       var that = this;
-      this.axios.get("api/v1/tools/selectCollegeUnit?id=" + id).then(res => {
+      this.axios.get("/api/v1/tools/selectCollegeUnit?id=" + id).then(res => {
         console.log(res);
         var data = res["data"]["data"];
         var arr = [];
@@ -399,6 +399,7 @@ export default {
                 dangerouslyUseHTMLString: true
               })
               .then(() => {
+                // 如果是注册界面转过来可能就是直接进入测试界面
                 that.$router.go(-1);
               });
         } else {
@@ -473,7 +474,7 @@ export default {
 }
 .register {
   z-index: 2;
-  width: 500px;
+  max-width: 500px;
   height: 900px;
   position: absolute;
   left: 50%;

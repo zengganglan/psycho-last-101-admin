@@ -11,13 +11,18 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {        
-        target: 'http://115.159.209.142:7006',
+        target: 'http://47.114.148.153:7006',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '/api' }
+      },
+      'api': {        
+        target: 'http://47.114.148.153:7006',
         changeOrigin: true,
         pathRewrite: { '^/api': '/api' }
       },
       '/uploads': {
         // target: 'http://psy.hxxlcloud.com',
-        target: 'http://115.159.209.142:7006',
+        target: 'http://47.114.148.153:7006',
         changeOrigin: true,
         pathRewrite: { '^/uploads': '/uploads' }
       },
@@ -31,7 +36,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '192.168.88.105', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

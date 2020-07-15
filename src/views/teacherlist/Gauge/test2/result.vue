@@ -600,12 +600,12 @@ export default {
       //   this.form1.id = row.id;
       //   this.form1.name = row.name;
       //   this.form1.unit_name = row.unit_name19;
-      if (index == 0) {
-        this.$router.push({
-          path: "/Gauge/resultdetail",
-          query: { id: 19 }
-        });
-      }
+      // if (index == 0) {
+      //   this.$router.push({
+      //     path: "/Gauge/resultdetail",
+      //     query: { id: 19 }
+      //   });
+      // }
       this.$router.push({
         path: "/Gauge/resultdetail",
         query: { id: row.id }

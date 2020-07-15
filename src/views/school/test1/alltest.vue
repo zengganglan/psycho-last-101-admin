@@ -83,8 +83,11 @@
               @click.stop="handleEdit(scope.$index, scope.row)"
             >编辑</el-button>
             <!-- <el-button size="mini" @click.stop="show(scope.$index, scope.row)">
-              <span class="iconfont icon-qrcode"></span>
+            
             </el-button> -->
+              <el-switch @change='setstaus($event,scope.row)'  active-text="开"
+                inactive-text="关" active-color="#13ce66" inactive-color="#ff4949"  :active-value="1"
+                :inactive-value="0" v-model='scope.row.is_visible'></el-switch>
             <!-- <el-button
                 size="mini"
                 type="danger"
@@ -255,6 +258,14 @@ export default {
     // this.changeobj(this.tableData);
   },
   methods: {
+    setstaus(el,row){
+      console.log(el,row)
+       this.axios.post("/api/v1/system/scale/saveScaleVisible?id="+row.id,{'is_visible':el}).then(res => {
+        if (res["data"]["code"] == 0) {
+          alert('设置成功')
+        }
+      });
+    },
     gettype() {
       var that = this;
       this.axios.get("/api/v1/tools/selectScaleTypeList").then(res => {

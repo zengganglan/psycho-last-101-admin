@@ -99,6 +99,8 @@ import studentlayout from '../views/layout/studentlayout'
 import studentschool from '../views/layout/studentschool'
 import gpartical from '../views/studentlist/gpartical'
 import gocale from '../views/studentlist/gocale'
+import questionLogin from '../views/studentlist/questionLogin'
+
 import caleindex from '../views/studentlist/caleindex'
 import calequestion from '../views/studentlist/calequestion'
 import caleresult from '../views/studentlist/caleresult'
@@ -107,6 +109,7 @@ import survey from '../views/studentlist/Evaluation/survey'
 import zice from '../views/studentlist/Evaluation/zice'
 import jilu from '../views/studentlist/Evaluation/jilu'
 import test from '../views/studentlist/Evaluation/test'
+import jiluresult from '../views/studentlist/Evaluation/resultdetail'
 
 import course from '../views/studentlist/group/course'
 import courselist from '../views/studentlist/group/courselist'
@@ -822,6 +825,11 @@ export default new Router({
       component: gocale,
     },
     {
+      path: '/studentindex/questionLogin',
+      name: '量表手机登录',
+      component: questionLogin,
+    },
+    {
       path: '/studentindex/caleindex',
       name: '量表开始',
       component: caleindex,
@@ -855,6 +863,11 @@ export default new Router({
         path: "jilu",
         name: "心理记录",
         component: jilu
+      },
+      {
+        path: "resultdetail",
+        name: "心理记录",
+        component: jiluresult
       },
      
       ]

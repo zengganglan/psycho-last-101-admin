@@ -1,20 +1,18 @@
 <template>
   <div class="login">
-  
-                          <!-- <span v-if="$store.state.logo">111</span> -->
+    <!-- <span v-if="$store.state.logo">111</span> -->
 
-    <div  :class="['head',$store.state.token?'loginhead':'headbac']">
+    <div :class="['head',$store.state.token?'loginhead':'headbac']">
       <div class="top1">
-
-         <div class="title" v-if="$store.state.token">
-                   <img v-if="$store.state.logo" :src="$store.state.logo" alt />
-                   <img v-else src="../../assets/images/e2a51aafad9aa42d23ca511382c1784.png"  alt="">
+        <div class="title" v-if="$store.state.token">
+          <img v-if="$store.state.logo" :src="$store.state.logo" alt />
+          <img v-else src="../../assets/images/e2a51aafad9aa42d23ca511382c1784.png" alt />
 
           <span v-if="role['sf']!==1">{{role['college_name']}}心理系统</span>
         </div>
         <ul>
           <li ref="soli1" @click.stop="first" @mouseover.stop="first" @mouseout="mouse">首页</li>
-          <li ref="soli" @click.stop="gocale" @mouseover.stop="gocale"  @mouseout="mouse">量表</li>
+          <li ref="soli" @click.stop="gocale" @mouseover.stop="gocale" @mouseout="mouse">量表</li>
           <li
             class="soli"
             ref="soli"
@@ -23,16 +21,16 @@
             v-if="index<5"
             @click.stop="cli($event,item.id,index)"
             @mouseover.stop="cli($event)"
-             @mouseout="mouse"
+            @mouseout="mouse"
           >{{item.name}}</li>
           <li
             ref="soli2"
             @click.self="first"
             @mouseover.self="first"
-             @mouseout="mouse"
+            @mouseout="mouse"
             v-show="$store.state.columns.length>=5"
           >
-          <span>更多</span>
+            <span>更多</span>
             <el-dropdown trigger="click" @command="handleCommand">
               <span class="el-dropdown-link">
                 <!-- 更多 -->
@@ -55,9 +53,14 @@
 
     <!-- 轮播图 -->
     <div class="banner">
-       <div v-if="!$store.state.token">
-      <img src="../../assets/images/15dec97a7f32eeef8008fa21e520764.png" alt="" style="width:100%" v-if="!$store.state.token">
-       </div>
+      <div v-if="!$store.state.token">
+        <img
+          src="../../assets/images/15dec97a7f32eeef8008fa21e520764.png"
+          alt
+          style="width:100%"
+          v-if="!$store.state.token"
+        />
+      </div>
       <el-carousel :interval="5000" arrow="always" height="800px" v-else>
         <el-carousel-item>
           <img src="../../assets/images/p1.jpg" alt />
@@ -73,7 +76,7 @@
         </el-carousel-item>
         <el-carousel-item>
           <img src="../../assets/images/6.png" alt />
-        </el-carousel-item> -->
+        </el-carousel-item>-->
       </el-carousel>
       <template v-if="$store.state.loginsucess">
         <form action class="loginform">
@@ -96,7 +99,7 @@
           <label class="f3">
             验证码：
             <input type="text" name="yzm" placeholder="验证码" v-model="yzm" />
-            <span class="yPicture"  @click="getyzm">
+            <span class="yPicture" @click="getyzm">
               <img :src="imgurl" alt ref="yzmimg" />
             </span>
             <span class="changeimg" @click="getyzm">换一张</span>
@@ -107,11 +110,9 @@
             <input type="checkbox" name="rember" ref="rember" />记住密码&nbsp;&nbsp;&nbsp;
             <router-link tag="a" to="/register">注册</router-link>&nbsp;
             <!-- <router-link tag="a" to="/getUserPassword">忘记密码</router-link> -->
-
-        
           </label>
           <br />
-                      <el-button type="primary" plain class="start" @click="login"> 马上开始</el-button>
+          <el-button type="primary" plain class="start" @click="login">马上开始</el-button>
 
           <!-- <input type="button" name="start" value="马上开始" @click="login" /> -->
         </form>
@@ -142,14 +143,13 @@
               </ul>
             </div>
           </div>
-            <el-button type="primary" plain class="loginout" @click="goindex"> 进入系统</el-button>
+          <el-button type="primary" plain class="loginout" @click="goindex">进入系统</el-button>
         </div>
       </template>
     </div>
     <!-- 底部 -->
     <div class="bottom" v-if="$store.state.token">
       <div class="a1">
-       
         <div class="sons">
           <ul class="son">
             <li
@@ -170,7 +170,7 @@ import Cookies from "js-cookie";
 import $ from "jquery";
 import { type } from "os";
 import md5 from "blueimp-md5";
-import { log } from 'util';
+import { log } from "util";
 
 $(function() {
   // $(".top2>ul:nth-child(1)")
@@ -244,7 +244,7 @@ export default {
       role: "",
       sf: "",
       imgurl: "",
-      logo:''
+      logo: ""
     };
   },
   computed: {
@@ -273,7 +273,7 @@ export default {
   },
   mounted() {
     // console.log(this.$store.state.loginsucess, this.sf);
-    console.log(this.$refs.soli1)
+    console.log(this.$refs.soli1);
     this.$refs.soli1.style.cssText =
       "position: relative;bottom: 0px; background-color: #00CBA3;transition: all 1s ease; color: #fff;border-bottom: 1px solied #fff";
   },
@@ -305,8 +305,8 @@ export default {
         code: this.yzm
       };
       console.log(data, this.key);
-      if (!this.username || !this.password) {
-        alert("请输入用户名或密码");
+      if (!this.username || !this.password || !this.yzm) {
+        alert("请输入用户名或密码或验证码");
       } else {
         /*接口请求 ,返回结果应该有用户类型，和具体用户信息userid 是否可以登陆成功信息*/
         this.axios
@@ -318,17 +318,17 @@ export default {
           })
           .then(function(res) {
             // 如果为0 就是正常返回
-            console.log(res["data"])
+            console.log(res["data"]);
             if (res["data"]["code"] == 0) {
               var token = res["data"]["data"]["token"];
               var role = res["data"]["data"]["role"];
               that.role = role;
-             var logo =  res["data"]["data"]["setting"]
-             if (logo) {
-              if (logo['logo']) {
-                 that.logo="http://115.159.209.142:7006/"+logo['logo']
+              var logo = res["data"]["data"]["setting"];
+              if (logo) {
+                if (logo["logo"]) {
+                  that.logo = "http://115.159.209.142:7006/" + logo["logo"];
+                }
               }
-             }
               if (role["type"] == 1) {
                 if (role["college_name"]) {
                   // 学校超管？注册时一定会选学校
@@ -346,7 +346,11 @@ export default {
               Cookies.set("logo", that.logo, 86400);
               //  每一次登录把token放到vuex的数据管理库里面，设置后就可以取到token
               console.log(role);
-              that.$store.commit("setToken", { token: token, role: role,logo:that.logo });
+              that.$store.commit("setToken", {
+                token: token,
+                role: role,
+                logo: that.logo
+              });
               that.$store.commit("getToken");
               //第一次登陆检查有没有选择记住密码，如果选择就把用户登陆信息和密码同时放到cookie里面或则放到本地存储
               var checked = that.$refs.rember.checked;
@@ -354,6 +358,8 @@ export default {
                 Cookies.set("username", that.username);
                 Cookies.set("password", that.password);
               }
+                            that.$store.commit("column");
+
               // 登录成功返回个人用户信息判断是学生还是管理员
               if (role["type"] == 1 || role["type"] == 2) {
                 //只有管理员返回成功出现弹窗。可以点击进入系统/跳转相关页面
@@ -373,7 +379,7 @@ export default {
           })
           .catch(function(err) {
             console.log(err);
-            that.imgurl=''
+            that.imgurl = "";
           });
       }
     },
@@ -403,14 +409,14 @@ export default {
     getyzm() {
       var that = this;
       this.axios
-      // 缓存机制的问题
-        .get("/api/v1/verify?v="+ Math.random(10))
+        // 缓存机制的问题
+        .get("/api/v1/verify?v=" + Math.random(10))
         .then(function(res) {
           console.log(res);
           if (res.status == 200) {
             that.key = res["data"]["data"]["key"];
             that.imgurl = res["data"]["data"]["imgSrc"];
-            console.log( that.imgurl);
+            console.log(that.imgurl);
           }
         })
         .catch(function(err) {
@@ -421,28 +427,28 @@ export default {
     logincout() {
       Cookies.set("userToken", "");
       this.$store.commit("setToken", "");
+      this.$store.state.columns=''
       this.$store.state.loginsucess = true;
       this.getyzm();
     },
- mouse(event){
-   var target = event.target
-  target.style.cssText =
+    mouse(event) {
+      var target = event.target;
+      target.style.cssText =
         'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
-      
- },
+    },
     first(event) {
       if (event.type == "click") {
         this.$router.push({ path: "/login" });
       }
       if (this.$store.state.token) {
-         this.$refs.soli.map(item => {
-        item.style.cssText =
-          'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
-      });
+        this.$refs.soli.map(item => {
+          item.style.cssText =
+            'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
+        });
         this.$refs.soli2.style.cssText =
-        'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
+          'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
       }
-     
+
       this.$refs.soli1.style.cssText =
         'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
       event.target.style.cssText =
@@ -450,19 +456,17 @@ export default {
     },
 
     cli(event, id, index) {
-       if (this.$store.state.token) {
-          this.$refs.soli.map(item => {
-        item.style.cssText =
+      if (this.$store.state.token) {
+        this.$refs.soli.map(item => {
+          item.style.cssText =
+            'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
+        });
+        this.$refs.soli2.style.cssText =
           'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
-      });
-       this.$refs.soli2.style.cssText =
-        'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
-       }
-     
+      }
+
       this.$refs.soli1.style.cssText =
         'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
-
-     
 
       if (event.type == "click") {
         this.$router.push({
@@ -493,18 +497,16 @@ export default {
         this.$router.push({ path: "/studentindex/gocale" });
       }
       if (this.$store.state.token) {
-    this.$refs.soli.map(item => {
-        item.style.cssText =
-          'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
-      }); 
+        this.$refs.soli.map(item => {
+          item.style.cssText =
+            'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
+        });
         this.$refs.soli2.style.cssText =
-        'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';     
+          'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color: #00CBA3;border-bottom: "";';
       }
-    
+
       this.$refs.soli1.style.cssText =
         'position: relative;bottom: 0px;background-color: "";transition: all 1s ease; color:#00CBA3;border-bottom: "";';
-
-    
 
       event.target.style.cssText =
         "position: relative;bottom: 20px; background-color: #00CBA3;transition: all 1s ease; color: #fff;border-bottom: 1px solied #fff";
@@ -514,17 +516,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.headbac{
-   background-color: rgb(19, 18, 18);
-    opacity: 0.6;
-    position: absolute;
+.headbac {
+  background-color: rgb(19, 18, 18);
+  opacity: 0.6;
+  position: absolute;
 }
-.loginhead{
-     background-color: #fff;
-     position: relative;
+.loginhead {
+  background-color: #fff;
+  position: relative;
 }
-.box1{
-   .loginform {
+.box1 {
+  .loginform {
     width: 325px;
     height: 285px;
     top: 80px;
@@ -627,8 +629,8 @@ export default {
     position: relative;
     height: 60px;
     text-align: center;
-   
-      .title {
+
+    .title {
       display: inline-block;
       text-align: center;
       position: absolute;
@@ -638,33 +640,32 @@ export default {
       > span {
         font-size: 30px;
         font-weight: 800;
-        color: #00CBA3;
+        color: #00cba3;
       }
-      >img{
+      > img {
         height: 50px;
         width: 50px;
         vertical-align: middle;
         position: relative;
-        top:-10px;
-
+        top: -10px;
       }
     }
 
     > ul {
       height: 30px;
       position: absolute;
-      bottom:10px;
+      bottom: 10px;
       right: 50px;
       > li {
         float: left;
         width: 100px;
         margin-right: 4px;
         // border:1px solid #00CBA3;
-        box-shadow: 2px 0px 5px 2px #00CBA3;
+        box-shadow: 2px 0px 5px 2px #00cba3;
         height: 30px;
         line-height: 30px;
         font-size: 16px;
-        color: #00CBA3;
+        color: #00cba3;
         border-radius: 10px;
         cursor: pointer;
 
@@ -880,7 +881,7 @@ export default {
     padding-top: 75px;
     min-height: 500px;
     background-color: #ffff;
-  
+
     .tit {
       text-align: center;
       width: 100%;

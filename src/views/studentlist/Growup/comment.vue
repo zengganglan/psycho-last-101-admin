@@ -484,7 +484,7 @@ export default {
       this.dialogFormVisible = true;
       console.log(id);
       var that = this;
-      that.axios.get("api/v1/user/viewDetails").then(function(res) {
+      that.axios.get("/api/v1/user/viewDetails").then(function(res) {
         console.log(res);
         var detail = res["data"]["data"];
         // var group = res["data"]["data"]["unit_group_data"];
@@ -526,7 +526,7 @@ export default {
           form[key] = that.user_ext[key];
         }
       }
-      that.axios.post("api/v1/user/saveExtInfo", form).then(function(res) {
+      that.axios.post("/api/v1/user/saveExtInfo", form).then(function(res) {
         console.log(res);
         if (res["data"]["code"] == 0) {
           that.$message("编辑学生扩展信息成功");
@@ -578,7 +578,7 @@ export default {
         return;
       }
 
-      that.axios.post("api/v1/user/saveBaseInfo", obj).then(function(res) {
+      that.axios.post("/api/v1/user/saveBaseInfo", obj).then(function(res) {
         console.log(res);
         if (res["data"]["code"] == 0) {
           that.$message("编辑学生基本信息成功");

@@ -36,17 +36,17 @@
         <el-table-column prop="times" label="耗时"></el-table-column>
         <el-table-column prop="valid" label="有效"></el-table-column>
 
-        <!-- <el-table-column label="操作">
+        <el-table-column label="操作">
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click.stop="handleEdit(scope.$index, scope.row)">编辑</el-button>
-        <el-button
+          @click.stop="handleEdit(scope.$index, scope.row)">查看</el-button>
+        <!-- <el-button
           size="mini"
           type="danger"
-          @click.stop="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click.stop="handleDelete(scope.$index, scope.row)">删除</el-button> -->
       </template>
-        </el-table-column>-->
+        </el-table-column>
       </el-table>
     </div>
     <div>
@@ -237,10 +237,20 @@ export default {
       this.getlist(this.page.currentpage, this.page.pagesize);
     },
     handleEdit(index, row) {
-      this.dialogFormVisible1 = true;
+      // this.dialogFormVisible1 = true;
       this.form1.id = row.id;
       this.form1.name = row.name;
       this.form1.unit_name = row.unit_name;
+      console.log(row)
+      if (row.is_visible!==1) {
+         alert('当前量表结果不可见')
+         return;
+      }
+      // 检查是否可见
+        this.$router.push({
+        path: "/Evaluation/resultdetail",
+        query: { id: row.id }
+      });
     },
     editsure() {
       this.axios

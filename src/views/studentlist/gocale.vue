@@ -110,10 +110,12 @@ export default {
       this.dialogFormVisible = true;
       this.lbId=row.id
       this.name=row.view_name+row.short_name
-      //  this.$router.push({path:'/studentindex/calequestion',query:{scaleid:this.lbId,name:this.name}})
-
-    },
-    // 分页·
+    // 测试
+    //  this.$router.push({
+    //     path: "/studentindex/questionLogin",
+    //     query: { id: this.lbId, name: this.name }
+    //   });
+      },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.page.pagesize = val;
@@ -133,12 +135,11 @@ export default {
       //对话框打开生成二维码生成的二维码内容，可以添加变量//http://psy.hxxlcloud.com/#/studentindex/caleindex?id=
       var canvas = document.getElementById("canvas");
       console.log(this.lbId);
-      // http://115.159.209.142:7006 服务器域名
+      // http://115.159.209.142:7006 服务器域名public/
       if (!this.name) {
         this.name='无'
       }
-      
-      QRCode.toCanvas(canvas, "http://115.159.209.142:7006/#/studentindex/caleindex?id="+this.lbId+'&name='+this.name, function(
+      QRCode.toCanvas(canvas, `http://${window.location.host}/#/studentindex/questionLogin?id=${this.lbId}&name=${this.name}`, function(
         error
       ) {
         if (error) console.error(error);

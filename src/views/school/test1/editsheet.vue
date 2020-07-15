@@ -212,7 +212,7 @@ export default {
       // 头部组件信息
       headson: ["系统量表", "系统量表编辑"],
       topicflag: false,
-      links:`http://${window.location.host}/static/scale.xlsx`
+      links:`http://${window.location.host}/scale.xlsx`
     };
   },
   created() {

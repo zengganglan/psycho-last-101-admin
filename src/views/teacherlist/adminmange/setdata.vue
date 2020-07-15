@@ -120,8 +120,9 @@
         <li>密码：登录密码，必填，如果空缺将跳过该条数据；</li>
         <li>姓名：普通文字，必填，如果空缺将跳过该条数据；</li>
         <li>性别：男性用汉字“男”或数字“1”、女性用汉字“女”或数字“0”表示，如果此项空缺或者格式不正确则默认为男性；</li>
-        <li>班级：请用“<a href="student_dept.asp">班级设置</a>”中对应项目的ID数字填充，可留空；</li>
-        
+        <!-- <li>班级：请用“<a href="student_dept.asp">班级设置</a>”中对应项目的ID数字填充，可留空；</li> -->
+        <li>民族：可留空；</li>
+      
         <li>出生日期：按照规范填写</li>
         
         <li>电话：手机号码，如果不是手机号格式将被设为空，可留空；</li>
@@ -297,7 +298,7 @@ import pagination from "../../../components/pagination";
 export default {
   data() {
     return {
-             links:`http://${window.location.host}/static/user.xlsx`,
+             links:`http://${window.location.host}/user.xlsx`,
 
       disabled:true,
              isbtnActive:false,

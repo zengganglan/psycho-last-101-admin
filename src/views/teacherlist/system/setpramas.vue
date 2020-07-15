@@ -6,14 +6,13 @@
 
     <div class="data">
       <table class="a1">
-        <!-- <tr>
+        <tr>
           <td>二维码管理：</td>
           <td>
-            <span class="iconfont icon-qrcode"></span>
-            <span class="iconfont icon-qrcode"></span>
-            <span class="iconfont icon-qrcode"></span>
+            <span class="iconfont icon-qrcode" style="font-size:40px;cursor:pointer" @click="show"></span>
+           
           </td>
-        </tr> -->
+        </tr>
         
        
         <tr>
@@ -84,10 +83,15 @@
       </table>
     </div>
     <div class="add" @click="sub">提交设置</div>
+     <el-dialog title="手机二维码" :visible.sync="dialogFormVisible" @opened="useqrcode" width="500px">
+      <!-- <div class="tilt"><img src="../../../../assets/images/erweima.png" alt=""></div> -->
+      <canvas id="canvas" ref="canvas" style="margin-left:150px"></canvas>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import QRCode from "qrcode";
 import headson from "../../../components/headson";
 import pagination from "../../../components/pagination";
 
@@ -103,13 +107,38 @@ export default {
         register_audit: 0,
         std_page_tip: '11',
         logo:""
-      }
+      },
+      dialogFormVisible:false
     };
   },
   created() {
     this.getdata()
   },
   methods: {
+      show() {
+      // 按钮事件 传值
+      this.dialogFormVisible = true;
+ 
+      //  this.$router.push({path:'/studentindex/questionLogin',query:{id:this.lbId,name:this.name}})
+
+    },
+      useqrcode() {
+      //对话框打开生成二维码生成的二维码内容，可以添加变量//http://psy.hxxlcloud.com/#/studentindex/caleindex?id=
+      var canvas = document.getElementById("canvas");
+      console.log(this.lbId);
+      // http://115.159.209.142:7006 服务器域名
+      if (!this.name) {
+        this.name='无'
+      }
+      
+      QRCode.toCanvas(canvas, `http://115.159.209.142:7006/mobile`, function(
+        error
+      ) {
+        if (error) console.error(error);
+        console.log("QRCode success!");
+        
+      });
+    },
     getdata(){
       var that = this
       this.axios.get('/api/v1/admin/setting/index').then(function(res){

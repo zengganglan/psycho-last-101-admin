@@ -182,6 +182,8 @@ export default {
               if (res["data"]["code"] == 0) {
                 that.$message("删除成功");
                 that.getlist(that.page.currentPage, that.page.pagesize);
+                              that.$store.commit("column")
+
               } else {
                 that.$message(res["data"]["msg"]);
               }
@@ -240,6 +242,8 @@ export default {
               that.$message('编辑成功')
               that.dialogFormVisible=false;
               that.getlist(that.page.currentPage,that.page.pagesize)
+                            that.$store.commit("column")
+
 
              }else{
                that.$message(res['data']['msg'])
