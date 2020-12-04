@@ -47,7 +47,7 @@
           <td>
             <span v-if="item.parent_marriage_status==1">良好</span>
             <span v-else-if="item.parent_marriage_status==2">一般</span>
-            <span v-else-if="item.parent_marriage_status==2">较差</span>
+            <span v-else-if="item.parent_marriage_status==3">较差</span>
             <span v-else>离异</span>
           </td>
           <td>{{item.parent_divorced_age}}</td>

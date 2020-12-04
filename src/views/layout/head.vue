@@ -63,7 +63,7 @@
                 </el-button>
               </el-popover>-->
             </li>
-            <li class="bor" @click="goIndex">
+            <li class="bor" @click="goIndex" >
               <span class="iconfont icon-yemian"></span>
               首页
             </li>
@@ -587,7 +587,7 @@ export default {
           cursor: pointer;
           margin-right: 20px;
           text-align: center;
-          width: 116px;
+          width: 125px;
 
           span {
             font-size: 22px;

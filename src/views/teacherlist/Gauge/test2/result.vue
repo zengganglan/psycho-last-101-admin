@@ -34,7 +34,7 @@
                   filterable
                   remote
                   reserve-keyword
-                  placeholder="选择量表再统计[ASLEC,MHT,scl90,EPQ,16pf]"
+                  placeholder="统计:ASLEC,MHT,scl90,EPQ,16pf"
                   :remote-method="remoteMethod"
                   :loading="loading"
                   v-model="form2.scale_id"
@@ -106,8 +106,27 @@
         <i class="iconfont icon-trash"></i>
       </span>-->
       <span @click="showtable">查询</span>
-      <span @click="goanswer">导出答题</span>
-      <span @click="goscore">导出结果</span>
+      <span>
+        <el-button
+          size="mini"
+          primary
+          @click="goanswer"
+          :disabled="disabled1"
+          style="border-radius: 5px;
+    border: 1px solid #9f9a9b;height:20px;line-height:0px"
+        >导出答题</el-button>
+      </span>
+      <span >
+          <el-button
+          size="mini"
+          primary
+         
+         @click="goscore" 
+         :disabled="disabled1"
+          style="border-radius: 5px;
+    border: 1px solid #9f9a9b;height:20px;line-height:0px"
+        >导出结果</el-button>
+      </span>
       <i class="del">
         <el-button
           size="mini"
@@ -144,7 +163,11 @@
         <el-table-column prop="job_num" label="学号"></el-table-column>
         <el-table-column prop="start_test_time" label="测试时间"></el-table-column>
         <el-table-column prop="sex" label="性别"></el-table-column>
-        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column label="年龄">
+          <template slot-scope="scope">
+            <span>{{scope.row.age}}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="type" label="类型"></el-table-column>
         <el-table-column prop="times" label="耗时"></el-table-column>
         <el-table-column prop="valid" label="有效"></el-table-column>
@@ -234,6 +257,7 @@ export default {
   data() {
     return {
       disabled: true,
+      disabled1: true,
       activeName: "first",
       dialogFormVisible: false,
       dialogFormVisible1: false,
@@ -241,13 +265,13 @@ export default {
       roles: "",
       form: {
         name: "",
-        unit_name: ""
+        unit_name: "",
       },
       form1: {
         id: "",
         name: "",
         unit_name: "",
-        scale_id: ""
+        scale_id: "",
       },
       times: "",
       form2: {
@@ -259,7 +283,7 @@ export default {
         name: "",
         start_time: "",
         unit_group_id: "",
-        expire_time: ""
+        expire_time: "",
       },
       formLabelWidth: "100px",
       // 头部组件信息
@@ -271,7 +295,7 @@ export default {
         currentpage: 1,
         countpage: 0,
         pagesize: "10",
-        flag: false
+        flag: false,
       },
       currentRow: null,
       spanArr: [],
@@ -282,22 +306,22 @@ export default {
           { 1: { caleid: 2 } },
           { 2: { caleid: 4 } },
           { 3: { caleid: 6 } },
-          { 4: { caleid: 8 } }
+          { 4: { caleid: 8 } },
         ],
         [
           { 1: { caleid: 3 } },
           { 2: { caleid: 5 } },
           { 3: { caleid: 6 } },
-          { 4: { caleid: 8 } }
-        ]
+          { 4: { caleid: 8 } },
+        ],
       ],
       factor: [
         { id: 1, cales: [{ id: 2 }, { id: 3 }] },
         { id: 2, cales: [{ id: 4 }, { id: 5 }] },
         { id: 3, cales: [{ id: 6 }, { id: 7 }] },
-        { id: 4, cales: [{ id: 8 }, { id: 9 }] }
+        { id: 4, cales: [{ id: 8 }, { id: 9 }] },
       ],
-      editableTabs: []
+      editableTabs: [],
     };
   },
   created() {
@@ -314,7 +338,7 @@ export default {
   methods: {
     gettype() {
       var that = this;
-      this.axios.get("/api/v1/tools/selectScaleTypeList").then(res => {
+      this.axios.get("/api/v1/tools/selectScaleTypeList").then((res) => {
         if (res["data"]["code"] == 0) {
           that.editableTabs = res["data"]["data"];
           that.editableTabs.map((item, index) => {
@@ -327,10 +351,10 @@ export default {
     },
     // 模拟计算
     mouse() {
-      this.eglist.map(item => {
+      this.eglist.map((item) => {
         // 每一个人答题卡
         console.log(item);
-        item.map(item1 => {
+        item.map((item1) => {
           console.log(item1);
           // 得到因子ID{1:{caleid:2}} key因子
           for (var key in item1) {
@@ -338,7 +362,7 @@ export default {
             var factorid = key;
             var scale = item1[key]["caleid"];
             console.log(scale);
-            var obj = this.factor.find(item2 => {
+            var obj = this.factor.find((item2) => {
               return item2.id == factorid;
               //  console.log(item2)
             });
@@ -364,7 +388,7 @@ export default {
       console.log(this.multipleSelection);
       var id = [];
       if (this.multipleSelection.length !== 0) {
-        this.multipleSelection.map(item => {
+        this.multipleSelection.map((item) => {
           id.push(item["id"]);
         });
       } else {
@@ -374,7 +398,7 @@ export default {
       var that = this;
       this.axios
         .post("/api/v1/admin/scale/getTestResultSet", { ids: id })
-        .then(function(res) {
+        .then(function (res) {
           if (res["data"]["code"] == 0) {
             var obj = JSON.stringify(res["data"]["data"]);
             localStorage.setItem("scalesobj", obj);
@@ -382,32 +406,32 @@ export default {
             that.$message(res["data"]["msg"]);
           }
         });
-
+      // 注必须统一选择某一量表，不能选多个不同量表
       if (type == 1) {
         // 统计[答题选项答案]
         let routeUrl = that.$router.resolve({
           path: "/Gauge/statistic",
-          query: { id: 96 }
+          query: { id: 96 },
         });
         window.open(routeUrl.href, "_blank");
       } else if (type == 2) {
         // 导出答题[因子分数]
         let routeUrl = that.$router.resolve({
           path: "/Gauge/answer_score",
-          query: { id: 96 }
+          query: { id: 96 },
         });
         window.open(routeUrl.href, "_blank");
       } else if (type == 3) {
         // 导出结果[选项分数/选项答案]
         let routeUrl = that.$router.resolve({
           path: "/Gauge/test_export_answer",
-          query: { id: 96 }
+          query: { id: 96 },
         });
         window.open(routeUrl.href, "_blank");
       } else {
         // 团体报告
         let routeUrl = that.$router.resolve({
-          path: "/Gauge/totalresult"
+          path: "/Gauge/totalresult",
         });
         window.open(routeUrl.href, "_blank");
         //     that.$router.push({
@@ -420,7 +444,7 @@ export default {
       var that = this;
       this.axios
         .get("/api/v1/system/scale/getSelectScaleList?key=" + query)
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           if (res["data"]["code"] == 0) {
             that.roles = res["data"]["data"];
@@ -430,10 +454,17 @@ export default {
     selectcale() {
       //   <!-- id:12,29, 31,35,43,-->
       var id = this.form2.scale_id;
+       if (id) {
+      this.disabled1 = false;
+            console.log(id)
+
+      }else{
+      this.disabled1 = true;
+      }
       this.showtable();
       var ids = [12, 29, 31, 35, 43];
       var arr = [];
-      var sca = ids.find(item => {
+      var sca = ids.find((item) => {
         return item == id;
       });
       if (sca) {
@@ -442,8 +473,9 @@ export default {
       } else {
         this.disabled = true;
 
-        this.$message("请选择[scl90,EPQ,16pf,ASLEC,MHT]固定量表进行统计");
+        this.$message("查看团体报告请选择[scl90,EPQ,16pf,ASLEC,MHT]固定量表进行统计");
       }
+     
       //  var a = [{scale_id:12},{scale_id:12},{scale_id:12}]
     },
     // 搜索功能
@@ -487,9 +519,9 @@ export default {
         .post("/api/v1/admin/scale/getTestResultList", {
           page: currentpage,
           size: pagesize,
-          w: w
+          w: w,
         })
-        .then(function(res) {
+        .then(function (res) {
           if (res["data"].code == 0) {
             that.page.countpage = res["data"]["data"]["total"];
             that.tableData = res["data"]["data"]["list"];
@@ -501,7 +533,7 @@ export default {
                 // console.log(year);
                 item["age"] = year;
               } else {
-                item["age"] = "null";
+                item["age"] = "无";
               }
               var mm =
                 new Date(item["end_test_time"]).valueOf() -
@@ -563,7 +595,7 @@ export default {
         const _col = _row > 0 ? 1 : 0;
         return {
           rowspan: _row,
-          colspan: _col //相当于给给表格加上rowspan,colspan属性
+          colspan: _col, //相当于给给表格加上rowspan,colspan属性
         };
       }
     },
@@ -580,7 +612,7 @@ export default {
       // 点击的当前数据// 跳转路由传参// 根据参数查询当前这个人的所有ar报告
       this.$router.push({
         path: "/game/gamedetail",
-        query: { id: id, name: name }
+        query: { id: id, name: name },
       });
       //获取参数方法:      this.$route.query.id;
     },
@@ -608,7 +640,7 @@ export default {
       // }
       this.$router.push({
         path: "/Gauge/resultdetail",
-        query: { id: row.id }
+        query: { id: row.id },
       });
     },
     editsure() {
@@ -616,9 +648,9 @@ export default {
         .post("/api/v1/admin/sand/group/edit", {
           id: this.form1.id,
           name: this.form1.name,
-          unit_name: this.form1.unit_name
+          unit_name: this.form1.unit_name,
         })
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           if (res["data"]["code"] == 0) {
             that.$message("编辑成功");
@@ -634,7 +666,7 @@ export default {
         id.push(row.id);
       } else {
         if (this.multipleSelection.length !== 0) {
-          this.multipleSelection.map(item => {
+          this.multipleSelection.map((item) => {
             id.push(item["id"]);
           });
         } else {
@@ -644,7 +676,7 @@ export default {
       var that = this;
       this.axios
         .post("/api/v1/admin/sand/group/delete", { id: id })
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           if (res["data"]["code"] == 0) {
             that.$message("删除成功");
@@ -668,9 +700,9 @@ export default {
       this.axios
         .post("/api/v1/admin/sand/group/add", {
           name: that.form.name,
-          unit_name: that.form.unit_name
+          unit_name: that.form.unit_name,
         })
-        .then(function(res) {
+        .then(function (res) {
           console.log(res);
           if (res["data"]["code"] == 0) {
             that.$message("增加成功");
@@ -694,24 +726,24 @@ export default {
       this.myChart = this.$echarts.init(chart);
       var option = {
         title: {
-          text: "参测统计信息"
+          text: "参测统计信息",
         },
         color: ["#3398DB"],
         legend: {
-          data: ["销量"]
+          data: ["销量"],
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-          }
+            type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
+          },
         },
         grid: {
           left: "15%",
           right: "4%",
           bottom: "3%",
-          containLabel: true
+          containLabel: true,
         },
         yAxis: [
           {
@@ -721,32 +753,32 @@ export default {
               "潜在风险评估",
               "自杀倾向评估",
               "访谈评估",
-              "生活事件动态"
+              "生活事件动态",
             ],
             axisTick: {
-              alignWithLabel: true
-            }
-          }
+              alignWithLabel: true,
+            },
+          },
         ],
         xAxis: [
           {
-            type: "value"
-          }
+            type: "value",
+          },
         ],
         series: [
           {
             name: "2015",
             type: "bar",
             barWidth: "30",
-            data: [10, 52, 200, 334, 390]
-          }
-        ]
+            data: [10, 52, 200, 334, 390],
+          },
+        ],
       };
 
       this.myChart.setOption(option);
       this.myChart.resize();
       var that = this;
-      this.myChart.on("click", function(params) {
+      this.myChart.on("click", function (params) {
         console.log(params);
         if (params.name == "潜在风险评估") {
           // that.$router.push('/crisis/asses/danger')
@@ -760,13 +792,13 @@ export default {
 
         // window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
       });
-    }
+    },
   },
 
   components: {
     headson: headson,
-    schoolcheck: schoolcheck
-  }
+    schoolcheck: schoolcheck,
+  },
 };
 </script>
 
@@ -807,7 +839,7 @@ export default {
   margin-top: 20px;
   span {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 40px;
     width: 60px;
     height: 20px;
     background-color: #ffffff;

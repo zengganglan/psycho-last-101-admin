@@ -596,7 +596,7 @@ export default {
           }
         });
     },
-
+    
     // 返回上一级页面
     returnback() {
       this.$router.go(-1);
@@ -604,10 +604,10 @@ export default {
     checkSex(event) {
       var sex = event.target.value;
       if (sex == "男") {
-        this.values.sex = 0;
+        this.values.sex = 1;
         console.log(this.values.sex, this.values.group);
       } else {
-        this.values.sex = 1;
+        this.values.sex = 0;
       }
       (this.$refs.sex1.style.backgroundColor = ""),
         (this.$refs.sex2.style.backgroundColor = ""),

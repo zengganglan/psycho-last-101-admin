@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header>
-      <span class='iconfont icon-angle-left' @click="golin"> </span>
+      <span class="iconfont icon-angle-left" @click="golin"></span>
       {{name}}
       <span></span>
     </header>
@@ -82,12 +82,14 @@
 import $ from "jquery";
 import Cookies from "js-cookie";
 
-
 export default {
   data() {
     return {
       selected: [],
-      data: [{ id: 1, name: 1 }, { id: 2, name: 2 }],
+      data: [
+        { id: 1, name: 1 },
+        { id: 2, name: 2 }
+      ],
       ruleForm: {
         name: "",
         region: "",
@@ -107,7 +109,9 @@ export default {
       prersent: 0,
       flag: true,
       starttime: "",
-      disabled: true
+      disabled: true,
+      is_visible: "",
+      cishu: 0
     };
   },
   created() {
@@ -123,6 +127,7 @@ export default {
           if (res["data"]["code"] == 0) {
             that.starttime = res["data"]["data"]["start_test_time"];
             that.topic = res["data"]["data"]["topic"];
+            that.is_visible = res["data"]["data"]["is_visible"];
             that.show(that.num);
           } else {
             that.flag = false;
@@ -139,9 +144,9 @@ export default {
     show(num) {
       var that = this;
       var index = num;
-      var number= num / that.topic.length
+      var number = num / that.topic.length;
       // 截取两位小数
-      that.prersent =(number* 100).toFixed(2)-0;
+      that.prersent = (number * 100).toFixed(2) - 0;
       that.timu = that.topic[index - 1];
       if (that.timu.type == 2) {
         //    如果是多选而且有selects属性赋值给select 单选是直接获取到自己的selected
@@ -176,22 +181,31 @@ export default {
       var that = this;
       if (that.num < that.topic.length) {
         that.num++;
-        that.selected = []; //不然会继承前面选着的select，每次清空。如果选着过渲染时show会加上赋值   
-
-
+        that.selected = []; //不然会继承前面选着的select，每次清空。如果选着过渲染时show会加上赋值
         that.show(that.num);
       } else {
-        alert("最后一题可以提交");
+        that.$message("最后一题可以提交");
         // 切换按钮
         if (that.num == that.topic.length - 1) {
           // $('.jh .right').removeClass('show').addClass('hidden')
-         // $('.jh .get').removeClass('hidden').addClass('show')
+          // $('.jh .get').removeClass('hidden').addClass('show')
+        }
+      }
+    },
+    sleep(sleepTime) {
+      var start = new Date().getTime();
+      while (true) {
+        if (new Date().getTime() - start > sleepTime) {
+          console.log(new Date().getTime() - start);
+          break;
         }
       }
     },
     chooseAnswer() {
       // 只有选择了都有select的属性，可能为空值，没选一定没有这个属性 组件每一次都能从新得到新的值，不会和已选到的重合\
+
       var that = this;
+      that.cishu = that.cishu + 1;
       that.disabled = false;
       if (that.timu.type == 1) {
         var arr = [];
@@ -200,36 +214,30 @@ export default {
       } else {
         that.topic[that.num - 1]["selected"] = that.selected;
       }
-      setTimeout(() => {
-         that.next()
-      }, 500);
-     
+      if (that.cishu < 2) {
+        setTimeout(() => {
+          that.next();
+          that.cishu = 0;
+          // that.$message("11");
+        }, 800);
+      }
+
       console.log(that.topic[that.num - 1], that.selected);
     },
     submit() {
-      if (!Cookies.get("userToken")) {
-        this.$message('请前去登录再提交答案查看结果')
-         this.$router.push({
-        path: "/studentindex/questionLogin",
-        query: { id: this.$route.query.scaleid, name: this.name }
-      });
-      return;
-      }
-     
       var that = this;
       var answers = [];
-       var noNnswer = [];
+      var noNnswer = [];
       this.topic.map((item, index) => {
         if (item["selected"] && item["selected"].length > 0) {
           console.log(item.selected);
           answers.push(item.selected);
         } else {
           answers.push(null);
-           noNnswer.push(index+1);
-
+          noNnswer.push(index + 1);
         }
       });
-        if (noNnswer.length > 0) {
+      if (noNnswer.length > 0) {
         var msg = "无答题：";
         noNnswer.map((item, index) => {
           msg = msg + item + ",";
@@ -242,31 +250,58 @@ export default {
           answers[index] = item[0];
         }
       });
-       
-      this.axios
-        .post("/api/v1/scale/submitAnswer", {
-          scale_id: that.$route.query.scaleid,
-          start_test_time: that.starttime,
-          answer: answers
-        })
-        .then(res => {
-          if (res["data"]["code"] == 0) {
-            localStorage.setItem('scaleresult',JSON.stringify(res.data.data))
-             that
-              .$alert("<strong>" +'提交成功查看结果吗' + "</strong>", "提示", {
-                dangerouslyUseHTMLString: true
-              })
-              .then(() => {
-                 that.$router.push({'path':'/studentindex/caleresult',query:{starttime:that.starttime,name:that.name}})
-              });
-          }else{
-              that.$message(res["data"]["msg"])
+      // 监测有没有登录
+      var obj = {
+        scale_id: that.$route.query.scaleid,
+        start_test_time: that.starttime,
+        answer: answers
+      };
+      if (!Cookies.get("userToken")) {
+        this.$message("请前去登录再提交答案查看结果");
+        localStorage.setItem("answer", JSON.stringify(obj));
+        localStorage.setItem("is_visible", JSON.stringify(that.is_visible));
+        this.$router.push({
+          path: "/studentindex/questionLogin",
+          query: {
+            id: this.$route.query.scaleid,
+            name: this.name,
+            starttime: that.starttime,
+            islogin:'islogin'
           }
         });
+        return;
+      }
+
+      //islogin
+      this.axios.post("/api/v1/scale/submitAnswer", obj).then(res => {
+        if (res["data"]["code"] == 0) {
+          localStorage.setItem("scaleresult", JSON.stringify(res.data.data));
+          that
+            .$alert("<strong>" + "提交成功查看结果吗" + "</strong>", "提示", {
+              dangerouslyUseHTMLString: true
+            })
+            .then(() => {
+              if (that.is_visible == 1) {
+                that.$router.push({
+                  path: "/studentindex/caleresult",
+                  query: {
+                    starttime: that.starttime,
+                    name: that.name,
+                    id: that.$route.query.scaleid
+                  }
+                });
+              } else {
+                that.$message("该量表结果不可见，请联系管理员");
+              }
+            });
+        } else {
+          that.$message(res["data"]["msg"]);
+        }
+      });
     },
-    golin(){
-        this.$router.go(-1)
-      },
+    golin() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>
@@ -288,19 +323,19 @@ export default {
     line-height: 50px;
     font-size: 20px;
     position: relative;
-    .iconfont{
-        font-size: 20px;
-        color: #ffffff;
-        position: absolute;
-        top: 0;
-        left:10px;
-        cursor: pointer;
+    .iconfont {
+      font-size: 20px;
+      color: #ffffff;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      cursor: pointer;
     }
   }
   main {
     width: 100%;
     overflow: hidden;
-    margin-top: 100px;
+    margin-top: 30px;
 
     .top {
       background: url("../../assets/images/tb@2x.png") no-repeat;
@@ -334,7 +369,7 @@ export default {
           line-height: 20px;
         }
         .qus {
-          height: 500px;
+          height: 400px;
           width: 100%;
 
           .title {

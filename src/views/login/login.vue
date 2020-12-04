@@ -138,6 +138,7 @@
                   身份：
                   <i v-if="role['type']==1 && role['college_name']">校级超级管理员</i>
                   <i v-else-if="role['type']==1">总超级管理员</i>
+                   <i v-else-if="role['type']==3">学生用户</i>
                   <i v-else>普通管理员</i>
                 </li>
               </ul>
@@ -326,7 +327,7 @@ export default {
               var logo = res["data"]["data"]["setting"];
               if (logo) {
                 if (logo["logo"]) {
-                  that.logo = "http://115.159.209.142:7006/" + logo["logo"];
+                  that.logo = logo["logo"];
                 }
               }
               if (role["type"] == 1) {
@@ -361,15 +362,10 @@ export default {
                             that.$store.commit("column");
 
               // 登录成功返回个人用户信息判断是学生还是管理员
-              if (role["type"] == 1 || role["type"] == 2) {
+              if (role["type"] == 1 || role["type"] == 2 || role["type"] == 3) {
                 //只有管理员返回成功出现弹窗。可以点击进入系统/跳转相关页面
                 that.$store.state.loginsucess = false;
-              } else if (role["type"] == 3) {
-                //如果是学生直接进入学生页面
-                that.$router.push({
-                  path: "/Evaluation/survey"
-                });
-              }
+              } 
             } else {
               // 登录不成功刷新验证码
               alert(res["data"]["msg"]);
@@ -404,6 +400,11 @@ export default {
       } else if (role["type"] == 2) {
         // 学校普通管理员
         this.$router.push({ path: "/admin/teacherindex/teacherschool" });
+      }else if (role["type"] == 3) {
+        // 学校普通管理员
+         this.$router.push({
+                  path: "/Evaluation/survey"
+                });
       }
     },
     getyzm() {

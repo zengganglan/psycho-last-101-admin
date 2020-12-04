@@ -75,7 +75,7 @@
             <span>{{scope.row.min_age+" — "+scope.row.max_age}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="160">
+        <el-table-column label="操作" width="260">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -85,9 +85,13 @@
             <!-- <el-button size="mini" @click.stop="show(scope.$index, scope.row)">
             
             </el-button> -->
-              <el-switch @change='setstaus($event,scope.row)'  active-text="开"
+            <el-tooltip content="开放量表结果" placement="top">
+  <el-switch @change='setstaus($event,scope.row)'  active-text="开"
                 inactive-text="关" active-color="#13ce66" inactive-color="#ff4949"  :active-value="1"
                 :inactive-value="0" v-model='scope.row.is_visible'></el-switch>
+</el-tooltip>
+
+             
             <!-- <el-button
                 size="mini"
                 type="danger"

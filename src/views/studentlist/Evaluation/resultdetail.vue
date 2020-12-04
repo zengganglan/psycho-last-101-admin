@@ -122,6 +122,7 @@ export default {
       answers: "",
       facname: [],
       score: [],
+      obj:[],
       user: {
         name: "",
         sex: "",
@@ -178,7 +179,7 @@ export default {
     getlist() {
       var that = this;
       this.axios
-        .get("/api/v1/admin/scale/getTestResultDetail", {
+        .get("/api/v1/scale/getTestResultDetail", {
           params: { id: this.$route.query.id }
         })
         .then(function(res) {
@@ -194,9 +195,14 @@ export default {
             var facname = [];
             var score = [];
             for (var key in that.factors) {
+                              var items={}            
               if (that.factors[key]["calc"].length > 0) {
                 that.facname.push(that.factors[key]["desc"]["factor"]["name"]);
                 that.score.push(that.factors[key]["score"]);
+                  items['name']=that.factors[key]["desc"]["factor"]["name"]
+                items['value']=that.factors[key]["score"]
+                 that.obj.push(items)
+
               }
               // 没有对应的结算区间找不到他的因子
             }
@@ -220,7 +226,7 @@ export default {
 
       this.myChart = this.$echarts.init(chart);
       var option;
-      var option1 = {
+       var option1 = {
         tooltip: {
           trigger: "item",
           formatter: "{a} <br/>{b}{c} ({d}%)"
@@ -234,30 +240,23 @@ export default {
         series: [
           {
             name: "得分：",
-
-            type: "pie",
-            radius: ["50%", "70%"],
-            avoidLabelOverlap: false,
-            label: {
+            itemStyle: {
               normal: {
-                show: false,
-                position: "center"
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: "20",
-                  fontWeight: "bold"
+                label: {
+                  show: true,
+                   formatter: '{b}:{c} ({d}%)' 
+                },
+                labelLine: {
+                  show: true
                 }
               }
             },
 
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: this.score
+            type: "pie",
+            radius: ["50%", "70%"],
+            avoidLabelOverlap: true,
+
+            data: this.obj
           }
         ]
       };
@@ -273,13 +272,14 @@ export default {
         series: [
           {
             data: this.score,
-            type: "line"
+            type: "line",
+            itemStyle: { normal: { label: { show: true } } }
           }
         ]
       };
       var option3 = {
         title: {
-          text: "危机干预综合信息"
+          text: "综合信息"
         },
         color: ["#3398DB"],
         legend: {
@@ -317,7 +317,8 @@ export default {
             name: "分数",
             type: "bar",
             barWidth: "100",
-            data: this.score
+            data: this.score,
+            itemStyle: { normal: { label: { show: true } } }
           }
         ]
       };

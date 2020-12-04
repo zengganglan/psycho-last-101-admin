@@ -11,18 +11,18 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {        
-        target: 'http://47.114.148.153:7006',
+        target: 'http://116.62.71.97',
         changeOrigin: true,
         pathRewrite: { '^/api': '/api' }
       },
       'api': {        
-        target: 'http://47.114.148.153:7006',
+        target: 'http://116.62.71.97',
         changeOrigin: true,
         pathRewrite: { '^/api': '/api' }
       },
       '/uploads': {
         // target: 'http://psy.hxxlcloud.com',
-        target: 'http://47.114.148.153:7006',
+        target: 'http://116.62.71.97',
         changeOrigin: true,
         pathRewrite: { '^/uploads': '/uploads' }
       },

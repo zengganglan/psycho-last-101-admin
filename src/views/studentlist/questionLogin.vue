@@ -14,14 +14,16 @@
           有可能是学号登录的没有手机号，有手机号就直接测试不弹窗】就登录正确去测试，不正确找回密码，不存在就自动在数据库把手机号作为账号，密码是手机号 后6位在测试-->
           <input type="button" value="快捷登录" name="btn" @click="goindex($event)" />
           <div style="margin-top:80px">
-            <el-button type="primary" round @click="sturegister">本校学生注册</el-button>
+            <el-button type="primary" round @click="sturegister">本校学生通道</el-button>
             <el-button type="success" round @click="gos">跳过直接测试</el-button>
           </div>
         </div>
       </template>
       <template v-else>
         <div>
-          <input type="password" placeholder="输入密码[默认手机号后6位]" name="password" v-model="password" />
+          <input type="password" placeholder="输入密码" name="password" v-model="password" />
+          <span>输入密码：默认手机后六位</span>
+
           <!-- <input type="text" name="yzm" placeholder="验证码" v-model="yzm" />
             <span class="yPicture" @click="getyzm">
               <img :src="imgurl" alt ref="yzmimg" />
@@ -72,9 +74,15 @@ export default {
     };
   },
   created() {
-    if ( sessionStorage.getItem("phone")) {
-          this.value = sessionStorage.getItem("phone");
-
+    if (localStorage.getItem("phone")) {
+      this.value = localStorage.getItem("phone");
+    }
+    if (Cookies.get("userToken")) {
+      console.log(11111111);
+      this.$router.push({
+        path: "/studentindex/caleindex",
+        query: { id: this.id, name: this.name }
+      });
     }
   },
   methods: {
@@ -150,28 +158,70 @@ export default {
             var token = res["data"]["data"]["token"];
             var role = res["data"]["data"]["role"];
             var logo = res["data"]["data"]["setting"];
+            localStorage.setItem("rolename", role.phone);
             Cookies.set("userToken", token, 86400);
+            Cookies.set("role", role, 86400);
+            Cookies.set("logo", that.logo, 86400);
             that.$store.commit("setToken", {
               token: token,
               role: role,
               logo: logo
             });
+            that.$store.commit("getToken");
+            that.$message("登录成功");
+            // 判断有没有存储的答案
+            console.log(that.$route.query.islogin)
+            if (that.$route.query.islogin) {
+              if (localStorage.getItem("answer")) {
+                that.subanswer(JSON.parse(localStorage.getItem("answer")));
+                return;
+              }
+            }
+
             // 传量表id 和量表名
             that.$router.push({
               path: "/studentindex/caleindex",
-              query: { id: this.id, name: this.name }
+              query: { id: that.id, name: that.$route.query.name }
             });
           } else {
-            that.$message(res.data.msg);
+            that.$message(res.data.msg || "登录失败");
           }
         });
     },
     forgetpass() {
       this.$message("请联系学校管理员修改密码重置");
     },
+    subanswer(params) {
+      var that = this;
+      this.axios.post("/api/v1/scale/submitAnswer", params).then(res => {
+        if (res["data"]["code"] == 0) {
+          localStorage.setItem("scaleresult", JSON.stringify(res.data.data));
+          that
+            .$alert("<strong>" + "提交成功查看结果吗" + "</strong>", "提示", {
+              dangerouslyUseHTMLString: true
+            })
+            .then(() => {
+              if (localStorage.getItem("is_visible") == 1) {
+                that.$router.push({
+                  path: "/studentindex/caleresult",
+                  query: {
+                    starttime: that.$route.query.starttime,
+                    name: that.$route.query.name,
+                    id: that.$route.query.id
+                  }
+                });
+              } else {
+                that.$message("该量表结果不可见，请联系管理员");
+              }
+            });
+        } else {
+          that.$message(res["data"]["msg"]);
+        }
+      });
+    },
 
     goindex(event) {
-      sessionStorage.setItem("phone", this.value);
+      localStorage.setItem("phone", this.value);
       console.log(this.value.substr(this.value.length - 6));
 
       var reg = /^1\d{10}$/;
@@ -199,12 +249,12 @@ export default {
             if (res.data.code == 0) {
               // 说明注册成功。输入密码在登录
               that.changeflag = false;
-              var phone = sessionStorage.getItem("phone");
+              var phone = localStorage.getItem("phone");
               that.password = phone.substr(phone.length - 6);
             } else {
               // 说明手机号存在或者别的情况让他进入登录输入密码
               that.changeflag = false;
-              var phone = sessionStorage.getItem("phone");
+              var phone = localStorage.getItem("phone");
               that.password = phone.substr(phone.length - 6);
             }
             console.log(res);

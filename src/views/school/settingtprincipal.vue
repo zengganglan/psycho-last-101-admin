@@ -159,7 +159,7 @@
                 placeholder="请输入身份证号"
                 style="width:200px"
               ></el-input>
-                              <span>*</span>
+                              <!-- <span>*</span> -->
 
               <!-- <input type="text" placeholder="18位身份证号" v-model="detail.id_card"> -->
             </td>

@@ -52,7 +52,7 @@
       width="55">
     </el-table-column>
         <el-table-column
-      prop="content"
+      prop="theme"
       label="主题"
      >
     </el-table-column>
@@ -114,13 +114,13 @@
     <el-dialog title="问题留言回复" :visible.sync="dialogFormVisible1">
       <el-form :model="form1">
         <el-form-item label="留言标题" :label-width="formLabelWidth">
-         <span>{{form1.name}}</span>
+         <span>{{form1.theme}}</span>
         </el-form-item>
         <el-form-item label="留言内容" :label-width="formLabelWidth">
-         <span>{{form1.name}}</span>
+         <span>{{form1.content}}</span>
         </el-form-item>
-        <el-form-item label="请回复留言" :label-width="formLabelWidth">
-          <el-input v-model="form1.content" autocomplete="off" style="width: 500px;" type='textarea'></el-input>
+        <el-form-item label="备注" :label-width="formLabelWidth">
+          <el-input v-model="form1.replaycontent" autocomplete="off" style="width: 500px;" type='textarea'></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -144,8 +144,9 @@ export default {
       },
       form1: {
         id: "",
+        theme: "",
         content: "",
-        unit_name: ""
+        replaycontent: ""
       },
       formLabelWidth: "100px",
       // 头部组件信息
@@ -253,8 +254,8 @@ export default {
     handleEdit(index, row) {
       this.dialogFormVisible1 = true;
       this.form1.id = row.id;
-      this.form1.name = row.content;
-      this.form1.unit_name = row.content;
+      this.form1.theme = row.theme;
+      this.form1.content = row.content;
       console.log(row)
     },
     editsure() {
@@ -262,7 +263,7 @@ export default {
       this.axios
         .post("/api/v1/user/message/add/reply", {
           msg_id: this.form1.id,
-          content: this.form1.name,
+          content: this.form1.replaycontent,
         })
         .then(function(res) {
           console.log(res);

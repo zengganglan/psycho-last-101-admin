@@ -113,7 +113,7 @@
           -->
           <tr>
             <td align="right">■</td>
-            <td>请点击选择您要预约的咨询师和咨询时间：</td>
+            <td>请在下方日期表中，点击选择您要预约的咨询师和咨询时间，若无内容表示近期没有相关咨询活动</td>
           </tr>
           <tr>
             <td></td>
@@ -231,7 +231,7 @@ export default {
       config: {
         locale: "zh-cn",
         header: {
-          left: "month",
+          left: "",
           center: "title",
           right: "today prev,next,prevYear,nextYear "
         },

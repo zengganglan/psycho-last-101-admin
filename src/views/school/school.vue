@@ -69,9 +69,9 @@
         <el-form-item label="学校名称" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off" style="width: 210px;"></el-input>
         </el-form-item>
-        <el-form-item label="学校简介" :label-width="formLabelWidth">
+        <el-form-item label="学校简介" :label-width="formLabelWidth" >
 
-          <el-input v-model="form.unit_name" autocomplete="off" style="width: 500px;" type='textarea'></el-input>
+          <el-input v-model="form.unit_name" maxlength="50" autocomplete="off" style="width: 500px;" type='textarea'></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

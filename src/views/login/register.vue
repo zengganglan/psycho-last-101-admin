@@ -11,8 +11,9 @@
           >{{item.message}}</li>
         </ul>-->
         <div class="heads">
-          注册账号
-          <router-link to="/login" style="color:#009fe7">[登录]</router-link>
+         已有账号
+          <span  style="color:#009fe7;cursor:pointer" v-on:click='gologin'>[登录]</span>
+          <p style="margin:10px"> 注册账号</p>
         </div>
         <ul class="body">
           <template>
@@ -147,7 +148,7 @@
                     @change="handleItemChange"
                   >
                     <!-- <template slot-scope="{ node, data }">
-    <span>{{ data.name }}{{node.isLeaf}}</span>
+                  <span>{{ data.name }}{{node.isLeaf}}</span>
                     </template>-->
                   </el-cascader>
                   <!-- <schoolcheck ref="schoolcheck"></schoolcheck> -->
@@ -246,6 +247,18 @@ export default {
      this.values.class = value;
 
     },
+    gologin(){
+    var idkey = this.$route.query.id
+    console.log(idkey)
+    if (idkey) {
+      window.location.href='http://116.62.71.97/mobile/'
+    }else{
+       this.$router.push({
+        path: "/login",
+        query: { id: this.id, name: this.name }
+      });
+    }
+    },
     getgroup(id) {
       var that = this;
       this.axios.get("/api/v1/tools/selectCollegeUnit?id=" + id).then(res => {
@@ -328,9 +341,9 @@ export default {
     checkSex(event) {
       var sex = event.target.value;
       if (sex == "男") {
-        this.values.sex = 0;
-      } else {
         this.values.sex = 1;
+      } else {
+        this.values.sex = 0;
       }
 
       (this.$refs.sex1.style.backgroundColor = ""),
@@ -395,7 +408,7 @@ export default {
         console.log(res);
         if (res["data"]["code"] == 0) {
            that
-              .$alert("<strong>" +'注册成功' + "</strong>", "提示", {
+              .$alert("<strong>" +'注册成功，新注册用户需要管理员审核，请耐心等待' + "</strong>", "提示", {
                 dangerouslyUseHTMLString: true
               })
               .then(() => {
@@ -490,7 +503,7 @@ export default {
     // background-color: #CDCDCB;
     color: #a5a8a7;
     .heads {
-      height: 33px;
+      height: 55px;
       text-align: center;
       font-size: 20px;
       li {

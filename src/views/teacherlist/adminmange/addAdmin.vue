@@ -71,14 +71,14 @@
             <td>身份证号：</td>
             <td>
               <input type="text" placeholder="18位身份证号" v-model="values.id_card">
-              <span>*</span>
+              <!-- <span>*</span> -->
             </td>
           </tr>
           <tr class>
             <td>手机：</td>
             <td>
               <input type="text" placeholder="请输入手机号" v-model="values.phone">
-              <span>*</span>
+              <!-- <span>*</span> -->
             </td>
           </tr>
 

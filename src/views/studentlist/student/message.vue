@@ -59,8 +59,8 @@
         <el-form-item label="留言主题" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off" style="width: 210px;"></el-input>
         </el-form-item>
-        <el-form-item label="留言内容" :label-width="formLabelWidth">
-          <el-input v-model="form.unit_name" autocomplete="off" style="width: 500px;" type='textarea'></el-input>
+        <el-form-item label="留言内容" :label-width="formLabelWidth"  >
+          <el-input v-model="form.unit_name" autocomplete="off" maxlength="100" style="width: 500px;" type='textarea'></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

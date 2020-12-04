@@ -165,7 +165,7 @@
               </td>-->
               <td>
                 <!-- <input v-if="item.id==index1" type="text" v-model="item.last_login"> -->
-                <span>{{item.last_login || 'null'}}</span>
+                <span>{{item.last_login || '无'}}</span>
               </td>
 
               <td>
@@ -206,7 +206,7 @@
             <tr>
               <td>手机</td>
               <td>{{detail.phone}}</td>
-              <td>emile</td>
+              <td> e-mail</td>
               <td>{{detail.email}}</td>
             </tr>
             <tr>

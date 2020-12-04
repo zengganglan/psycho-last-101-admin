@@ -48,6 +48,7 @@ export default {
   mounted() {
     console.log(this.data2)
        console.log(this.inputName)
+       this.newvalue=this.inputName
 
   },
   created() {
@@ -64,6 +65,7 @@ export default {
     },
     inputName(){
       this.newvalue=this.inputName
+      console.log(inputName)
     }
   },
   methods: {

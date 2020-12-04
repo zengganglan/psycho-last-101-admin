@@ -82,7 +82,7 @@ router.beforeEach((to, from, next) => {
     if (typeof (role) == 'string') {
       role = JSON.parse(role)
     }
-    console.log(role['type'])
+    console.log(role)
     if (role['type'] == 1 || role['type'] == 2) {
       //只有管理员返回成功出现弹窗。可以点击进入系统/跳转相关页面
       store.state.loginsucess = false;

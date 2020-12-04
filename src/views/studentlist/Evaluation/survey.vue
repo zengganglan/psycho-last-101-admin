@@ -164,10 +164,10 @@ export default {
       var name = val["name"];
       console.log(val);
       // 点击的当前数据// 跳转路由传参// 根据参数查询当前这个人的所有ar报告
-      this.$router.push({
-        path: "/data/game/gamedetail",
-        query: { id: id, name: name }
-      });
+      // this.$router.push({
+      //   path: "/data/game/gamedetail",
+      //   query: { id: id, name: name }
+      // });
       //获取参数方法:      this.$route.query.id;
     },
     // 分页·

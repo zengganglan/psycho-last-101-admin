@@ -148,7 +148,7 @@
                 placeholder="请输入身份证"
                 style="width:200px"
               ></el-input>
-              <span>*</span>
+              <!-- <span>*</span> -->
 
               <!-- <input type="text" placeholder="18位身份证号" v-model="detail.id_card"> -->
             </td>
@@ -329,11 +329,10 @@ export default {
         !this.detail.name ||
         !this.detail.account ||
         !this.detail.sex ||
-        !this.detail.college_id ||
-        !this.detail.id_card
+        !this.detail.college_id 
       ) {
         that.$message(
-          "密码或者工号或者班级，账号 性别，身份证，姓名一定不为空值"
+          "密码或者工号或者班级，账号 性别，姓名一定不为空值"
         );
         return;
       }

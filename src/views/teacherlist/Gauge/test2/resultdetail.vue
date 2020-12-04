@@ -4,17 +4,17 @@
     <table class="tb_title">
       <tbody>
         <tr>
-          <th rowspan="2">测试记录记录查看</th>
-          <td class="label">姓名：</td>
+          <th rowspan="2" style="width:200px">测试记录记录查看</th>
+          <td class="label" style="width:100px">姓名：</td>
           <td>{{ detail['name']}}</td>
-          <td class="label">学号：</td>
+          <td class="label" style="width:100px">学号：</td>
           <td>{{detail['job_num']}}</td>
         </tr>
         <tr>
           <td class="label">性别：</td>
           <td>{{detail['sex']==1? '男' : '女'}}</td>
-          <td class="label">手机：</td>
-          <!-- <td>{{detail['phone']}}</td> -->
+          <td class="label">出生日期：</td>
+          <td>{{detail['birth_date']}}</td>
         </tr>
       </tbody>
     </table>
@@ -122,6 +122,7 @@ export default {
       answers: "",
       facname: [],
       score: [],
+      obj:[],
       user: {
         name: "",
         sex: "",
@@ -194,15 +195,19 @@ export default {
             var facname = [];
             var score = [];
             for (var key in that.factors) {
+                var items={}            
               if (that.factors[key]["calc"].length > 0) {
+                items['name']=that.factors[key]["desc"]["factor"]["name"]
+                items['value']=that.factors[key]["score"]
                 that.facname.push(that.factors[key]["desc"]["factor"]["name"]);
                 that.score.push(that.factors[key]["score"]);
+                 that.obj.push(items)
               }
               // 没有对应的结算区间找不到他的因子
             }
             that.print(that.type);
 
-            console.log(that.facname, that.score);
+            // console.log(that.facname, that.score, that.obj);
           }
         });
     },
@@ -216,7 +221,7 @@ export default {
       if (this.myChart) {
         this.myChart.clear();
       }
-      console.log(this.facname, this.score);
+      // console.log(this.facname, this.score);
 
       this.myChart = this.$echarts.init(chart);
       var option;
@@ -234,30 +239,23 @@ export default {
         series: [
           {
             name: "得分：",
-
-            type: "pie",
-            radius: ["50%", "70%"],
-            avoidLabelOverlap: false,
-            label: {
+            itemStyle: {
               normal: {
-                show: false,
-                position: "center"
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: "20",
-                  fontWeight: "bold"
+                label: {
+                  show: true,
+                   formatter: '{b}:{c} ({d}%)' 
+                },
+                labelLine: {
+                  show: true
                 }
               }
             },
 
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: this.score
+            type: "pie",
+            radius: ["50%", "70%"],
+            avoidLabelOverlap: true,
+
+            data: this.obj
           }
         ]
       };
@@ -273,13 +271,14 @@ export default {
         series: [
           {
             data: this.score,
-            type: "line"
+            type: "line",
+            itemStyle: { normal: { label: { show: true } } }
           }
         ]
       };
       var option3 = {
         title: {
-          text: "危机干预综合信息"
+          text: "综合信息"
         },
         color: ["#3398DB"],
         legend: {
@@ -317,7 +316,8 @@ export default {
             name: "分数",
             type: "bar",
             barWidth: "100",
-            data: this.score
+            data: this.score,
+            itemStyle: { normal: { label: { show: true } } }
           }
         ]
       };

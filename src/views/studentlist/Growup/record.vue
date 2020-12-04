@@ -125,7 +125,7 @@ export default {
       //  alert(`获取了${a}`);
       var that = this;
       this.axios
-        .post(`api/v1/user/message/list`,{
+        .post(`/api/v1/user/message/list`,{
           page: 1,
           size: 60,
         })
@@ -139,7 +139,7 @@ export default {
           });
           console.log(data1);
           this.axios
-            .get(`api/v1/counsel/getSelfInfo`)
+            .get(`/api/v1/counsel/getSelfInfo`)
             .then(res2 => {
               console.log(res2);
               var data2 = res2["data"]["data"];
@@ -224,14 +224,14 @@ export default {
 
     zixun() {
       this.axios
-        .get(`api/v1/admin/counsel/getClientListByUID?uid=${this.useid}`)
+        .get(`/api/v1/admin/counsel/getClientListByUID?uid=${this.useid}`)
         .then(res => {
           console.log(res);
         });
     },
     fangtan() {
       this.axios
-        .get(`api/v1/admin/coach/listByUID?uid==${this.useid}`)
+        .get(`/api/v1/admin/coach/listByUID?uid==${this.useid}`)
         .then(res => {
           console.log(res);
         });

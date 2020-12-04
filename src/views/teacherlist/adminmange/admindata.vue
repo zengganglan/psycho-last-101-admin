@@ -366,7 +366,7 @@ export default {
              var b=this.$refs.schoolcheck22.item.id-0
              var that = that
             //  无数据集调换失败有可能你转移的这个班级并没有学生存在
-             this.axios.get(`api/v1/admin/user/changeUnitGroup?srcid=${a}&dstid=${b}`).then(function(res){
+             this.axios.get(`/api/v1/admin/user/changeUnitGroup?srcid=${a}&dstid=${b}`).then(function(res){
                  if (res['data']['code']==0) {
                      alert('转移资料成功')
                  }else{
@@ -396,11 +396,11 @@ export default {
               console.log(year);
               item["age"] = year;
             } else {
-              item["age"] = "null";
+              item["age"] = "无";
             }
 
             if (!item["name"]) {
-              item["name"] = "null";
+              item["name"] = "无";
             }
 
             item.sex = item.sex + "";

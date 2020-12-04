@@ -131,7 +131,7 @@ export default {
         this.name='无'
       }
       
-      QRCode.toCanvas(canvas, `http://115.159.209.142:7006/mobile`, function(
+      QRCode.toCanvas(canvas, `http://116.62.71.97/mobile/`, function(
         error
       ) {
         if (error) console.error(error);
@@ -148,7 +148,7 @@ export default {
            that.data.stu_comment=data['stu_comment']
            that.data.register_audit=data['register_audit']
            that.data.std_page_tip=data['std_page_tip']
-           that.imageUrl='http://115.159.209.142:7006/'+data['logo']
+           that.imageUrl=data['logo']
         }
       })
     },

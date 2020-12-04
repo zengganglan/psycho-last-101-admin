@@ -6,6 +6,11 @@
     </header>
     <main>
       <div class="top">{{scalename}}</div>
+      <div class="but" style="margin-bottom:10px">
+        <el-button type="primary" @click="goagain(1)">重测</el-button>
+        <!-- <el-button @click="goagain(2)">关闭</el-button> -->
+      </div>
+
       <div class="time">
         测评时间：
         <span>{{starttime}}</span>
@@ -22,7 +27,6 @@
               v-if="item['desc']"
             >【{{item['desc']['factor']['name']}}】{{item['desc']['calc']['explain']}}。</span>
           </div>
-         
         </fieldset>
       </div>
 
@@ -35,8 +39,8 @@
 export default {
   data() {
     return {
-         scalename: this.$route.query.name,
-                starttime:this.$route.query.starttime, 
+      scalename: this.$route.query.name,
+      starttime: this.$route.query.starttime,
       detail: "",
       factors: "",
       answers: "",
@@ -63,7 +67,17 @@ export default {
     console.log(scaleresult);
   },
   methods: {
-    get() {}
+    get() {},
+    goagain(val) {
+      if (val == 1) {
+        this.$router.push({
+          path: "/studentindex/caleindex",
+          query: { id: this.$route.query.id, name: this.$route.query.name }
+        });
+      } else {
+        window.open("about:blank", "_self").close();
+      }
+    }
   }
 };
 </script>
